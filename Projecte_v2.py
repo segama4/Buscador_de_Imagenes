@@ -20,7 +20,7 @@
 #   Definim els imports                                                      #
 #+--------------------------------------------------------------------------+#
 
-import os
+import os Hola
 import re
 from abc import ABC, abstractmethod
 import numpy as np
