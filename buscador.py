@@ -15,11 +15,76 @@ import matplotlib.pyplot as plt
 
 class Buscador():
     
-    def __init__(self, vocabulary_txt, vocabulary_img):
-        self._vocabulary_txt = vocabulary_txt
-        self._vocabulary_img = vocabulary_img
+    def __init__(self, t_document, t_representacio, t_distancia, t_model, train):
+        self._controlador = Controller(t_document, t_representacio, t_distancia, t_model, train)
 
-    def prepare_test_database(self, train):
+    def crea_models(self):
+        Controller.
+        
+        
+        
+        
+    def visualitza_resultats(self, conjunt_train):
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def prepare_test_database(self, train):
         self._database = []
         file_list = os.listdir(train)
         for file in file_list: 

@@ -21,73 +21,27 @@
 #+--------------------------------------------------------------------------+#
 
 import os
+import re
+from abc import ABC, abstractmethod
+import numpy as np
+import collections
 import time
 import cv2
 import pickle
-from agrupador import Agrupador
-from buscador import Buscador 
-from classes_arxius import Arxiu, Imatge, Document
-from controlador import Controller
-from visualitzador import Visualitzador
-from vocabulari import Vocabulary, Txt_Vocabulary, Img_Vocabulary
+import matplotlib.image as image
+import matplotlib.pyplot as plt
+from buscador import Buscador
 
 #+--------------------------------------------------------------------------+#
 #    Definim les funcions                                                    #
 #+--------------------------------------------------------------------------+#
 
-def retrieval(document_type, representation_type, distance_type, model_type, train):
+def retrieval(t_document, t_representacio, t_distancia, t_model, train):
         try: 
-            google = Buscador()
-            google.iniciar_controlador(document_type, representation_type, distance_type, train)
-            google.preparar_test()
-            if model_type == "recuperacio":
-                
-                
-                
-                
-            else:
-                
-            
-            
-            
-            
-            if tipus == "txt":  
-                vocabulary_txt = []
-                with open(vocabulary_file, "r") as file:
-                    for paraula in file:
-                        vocabulary_txt.append(paraula[:-1])
-                        
-                google = Buscador(vocabulary_txt, None)
-                google.prepare_test_database(train)
-                file_list = os.listdir(test)
-                for file in file_list:
-                    base_file = Document(file, test+"/"+file, vocabulary_txt, None)
-                    base_file.read()
-                    base_file.get_representation()
-                    result = google.make_clasification(base_file, k)
-                    google.view_results(result, tipus)
+            buscador = Buscador(t_document, t_representacio, t_distancia, t_model, train)
+            conjunt_train = buscador.crea_models()
+            buscador.visualitza_resultats(conjunt_train)
 
-            else:
-                sift = cv2.SIFT_create()
-                matcher = cv2.FlannBasedMatcher() 
-                with open(vocabulary_file, 'rb') as fitxer:
-                    vocabulary = pickle.load(fitxer)
-                bow_extractor = cv2.BOWImgDescriptorExtractor(sift, matcher)
-                bow_extractor.setVocabulary(vocabulary)
-                vocabulary_img = bow_extractor
-            
-                google = Buscador(None, vocabulary_img)
-                google.prepare_test_database(train)
-                file_list = os.listdir(test)
-                for file in file_list:       
-                    base_file = Imatge(file, test+"/"+file, vocabulary_img, None)
-                    base_file.read()
-                    base_file.get_representation()
-                    result = google.make_clasification(base_file, k)
-                    google.view_results(result, tipus)
-                    
-            return True
-        
         except:
             raise AssertionError("ERROR: Ha ocurregut un error durant l'execució!")
         
@@ -102,10 +56,49 @@ try:
     
     """Comentar un o l'altre (imatge o text) depenent del que vulgueu vuscar"""
     
-    #retrieval("cifar/test", "cifar/train", "img", "vocabulary.dat", 5)
-    retrieval("newsgroups/test", "newsgroups/train", "txt", "vocabulary.txt", 5)
+    #retrieval("imatge", "bow", "interseccio", "agrupament", "newsgroups")
+    retrieval("text", "tf-idf", "cosinus", "vocabulary.txt", "recuperacio", "cifrar")
 
 except AssertionError as missatge:
     print(missatge)
 
 print("\nTemps =", time.time()-start_time, "segons.")
+
+
+# =============================================================================
+# try: 
+#             if tipus == "txt":  
+#                 vocabulary_txt = []
+#                 with open(vocabulary_file, "r") as file:
+#                     for paraula in file:
+#                         vocabulary_txt.append(paraula[:-1])
+#                         
+#                 google = Buscador(vocabulary_txt, None)
+#                 google.prepare_test_database(train)
+#                 file_list = os.listdir(test)
+#                 for file in file_list:
+#                     base_file = Document(file, test+"/"+file, vocabulary_txt, None)
+#                     base_file.read()
+#                     base_file.get_representation()
+#                     result = google.make_clasification(base_file, k)
+#                     google.view_results(result, tipus)
+# 
+#             else:
+#                 sift = cv2.SIFT_create()
+#                 matcher = cv2.FlannBasedMatcher() 
+#                 with open(vocabulary_file, 'rb') as fitxer:
+#                     vocabulary = pickle.load(fitxer)
+#                 bow_extractor = cv2.BOWImgDescriptorExtractor(sift, matcher)
+#                 bow_extractor.setVocabulary(vocabulary)
+#                 vocabulary_img = bow_extractor
+#             
+#                 google = Buscador(None, vocabulary_img)
+#                 google.prepare_test_database(train)
+#                 file_list = os.listdir(test)
+#                 for file in file_list:       
+#                     base_file = Imatge(file, test+"/"+file, vocabulary_img, None)
+#                     base_file.read()
+#                     base_file.get_representation()
+#                     result = google.make_clasification(base_file, k)
+#                     google.view_results(result, tipus)
+# =============================================================================

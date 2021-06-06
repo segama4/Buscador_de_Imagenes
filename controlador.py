@@ -5,9 +5,6 @@
 #+--------------------------------------------------------------------------+#
 
 import os
-import re
-import matplotlib.image as image
-import matplotlib.pyplot as plt
 
 #+--------------------------------------------------------------------------+#
 #   Definim les classes                                                      #
