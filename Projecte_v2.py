@@ -20,31 +20,21 @@
 #   Definim els imports                                                      #
 #+--------------------------------------------------------------------------+#
 
-import os
-import re
-from abc import ABC, abstractmethod
-import numpy as np
-import collections
 import time
-import cv2
-import pickle
-import matplotlib.image as image
-import matplotlib.pyplot as plt
 from buscador import Buscador
+
 
 #+--------------------------------------------------------------------------+#
 #    Definim les funcions                                                    #
 #+--------------------------------------------------------------------------+#
 
-def retrieval(t_document, t_representacio, t_distancia, t_model, train):
-        try: 
+def retrieval(mode, nom_database, t_document, t_representacio, t_distancia, t_model, train):
+        buscador = Buscador(t_document, t_representacio, t_distancia, t_model, train)
+        if mode == 1: 
             buscador = Buscador(t_document, t_representacio, t_distancia, t_model, train)
-            conjunt_train = buscador.crea_models()
-            buscador.visualitza_resultats(conjunt_train)
-
-        except:
-            raise AssertionError("ERROR: Ha ocurregut un error durant l'execució!")
-        
+        else: 
+            buscador.visualitza_resultats(nom_database)
+            
 
 # =============================================================================
 #     Iniciem la funció
@@ -52,19 +42,58 @@ def retrieval(t_document, t_representacio, t_distancia, t_model, train):
 
 start_time = time.time()
 try:
-    print("\nResultats:\n")
-    
-    """Comentar un o l'altre (imatge o text) depenent del que vulgueu vuscar"""
-    
-    #retrieval("imatge", "bow", "interseccio", "agrupament", "newsgroups")
-    retrieval("text", "tf-idf", "cosinus", "vocabulary.txt", "recuperacio", "cifrar")
+    opcio = 1
+    while opcio == 1 or opcio == 2:
+        
+        print(""".______    _______ .__   __. ____    ____  __  .__   __.   _______  __    __  .___________. __
+                |   _  \  |   ____||  \ |  | \   \  /   / |  | |  \ |  |  /  _____||  |  |  | |           ||  |
+                |  |_)  | |  |__   |   \|  |  \   \/   /  |  | |   \|  | |  |  __  |  |  |  | `---|  |----`|  |
+                |   _  <  |   __|  |  . `  |   \      /   |  | |  . `  | |  | |_ | |  |  |  |     |  |     |  |
+                |  |_)  | |  |____ |  |\   |    \    /    |  | |  |\   | |  |__| | |  `--'  |     |  |     |__|
+                |______/  |_______||__| \__|     \__/     |__| |__| \__|  \______|  \______/      |__|     (__) 
+
+                𝚂𝚎𝚕𝚎𝚌𝚌𝚒𝚘𝚗𝚊 𝚚𝚞𝚎 𝚟𝚘𝚕𝚜 𝚏𝚎𝚛!\n""")
+        
+        try:
+            opcio = int(input("1- Crea els models.\n2- Visualitza resultats. (Atenció: Abans has de crear els models!)\n"))
+        except:
+            print("ERROR: Opció NO vàlida. Tria una opció correcta!")
+            opcio = int(input("1- Crea els models.\n2- Visualitza resultats. (Atenció: Abans has de crear els models!)\nAltre número implica sortir.\n"))
+        
+        if opcio == 1:
+            print("\n𝚂𝚎𝚕𝚎𝚌𝚌𝚒𝚘𝚗𝚊 𝚎𝚕𝚜 𝚙𝚊𝚛𝚊𝚖𝚎𝚝𝚛𝚎𝚜 𝚊𝚖𝚋 𝚎𝚕𝚜 𝚚𝚞𝚎 𝚟𝚘𝚕𝚜 𝚝𝚛𝚎𝚋𝚊𝚕𝚕𝚊𝚛!")
+            
+            start_time = time.time()
+            retrieval(1, "database.txt", "text", "tf-idf", "cosinus", "vocabulary.txt", "recuperacio", "cifrar")
+            print("\nFet! Temps =", time.time()-start_time, "segons.")
+            
+        elif opcio == 2:
+            retrieval(2, "database.txt","imatge", "bow", "interseccio", "agrupament", "newsgroups")
+        
+        else:
+            print("𝙵𝚒𝚗𝚜 𝚊𝚟𝚒𝚊𝚝!")
 
 except AssertionError as missatge:
     print(missatge)
 
-print("\nTemps =", time.time()-start_time, "segons.")
 
 
+
+
+
+# =============================================================================
+# import os
+# import re
+# from abc import ABC, abstractmethod
+# import numpy as np
+# import collections
+# import time
+# import cv2
+# import pickle
+# import matplotlib.image as image
+# import matplotlib.pyplot as plt
+# from buscador import Buscador
+# =============================================================================
 # =============================================================================
 # try: 
 #             if tipus == "txt":  

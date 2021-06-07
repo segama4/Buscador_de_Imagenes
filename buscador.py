@@ -17,18 +17,12 @@ class Buscador():
     
     def __init__(self, t_document, t_representacio, t_distancia, t_model, train):
         self._controlador = Controller(t_document, t_representacio, t_distancia, t_model, train)
-
+        
     def crea_models(self):
-        Controller.
+        self._database = Controller.crea_models()   
         
-        
-        
-        
-    def visualitza_resultats(self, conjunt_train):
-        
-
-
-
+    def visualitza_resultats(self, self._database):
+        Controller.crea_models()
 
 
 
