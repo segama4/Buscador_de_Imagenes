@@ -31,7 +31,7 @@ from buscador import Buscador
 def retrieval(mode, nom_database, t_document, t_representacio, t_distancia, t_model, train):
         buscador = Buscador(t_document, t_representacio, t_distancia, t_model, train)
         if mode == 1: 
-            buscador = Buscador(t_document, t_representacio, t_distancia, t_model, train)
+            buscador.crea_models(nom_database)
         else: 
             buscador.visualitza_resultats(nom_database)
             
