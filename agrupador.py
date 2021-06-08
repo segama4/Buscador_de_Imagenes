@@ -15,10 +15,31 @@ import matplotlib.pyplot as plt
 
 class Agrupador():
     
-    def __init__(self, vocabulary_txt, vocabulary_img):
-        self._vocabulary_txt = vocabulary_txt
-        self._vocabulary_img = vocabulary_img
-
-    def prepare_test_database(self, train):
-        self._database = []
-        file_list = os.listdir(train)
+    def __init__(self, train, k):
+        self._train = train
+        self._k = k
+        self._results = []
+        self._distancies = {}
+        for i in range(k):
+            self._results.append([[self._train[i]], [], []])
+        
+    def calcula_distancies(self):
+        for fitxer in self._train:
+            self._distancies[fitxer] = []
+            for grup in range(self._k):
+                self._distancies[fitxer].append([fitxer.calcula_distancia(
+                self._results[grup][0]), self._results[grup][0]])
+        error = max([distancia for distancia in [distancia for distancia in [self._distancies[fitxer] for fitxer in self._distancies.keys()]]])
+    
+    def calcula_grups(self):
+        for fitxer in self._distancies:
+            
+        
+        
+    def calcula_representant(self):
+        for group in range(self._k):
+            
+        
+        
+    def get_results(self):
+        return self._results
