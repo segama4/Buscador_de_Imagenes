@@ -12,7 +12,7 @@ class Recuperador ():
         self._offset = 0
 
     def calcula_distancies (self):
-        for fitxer in os.listdir(self._train):
+        for fitxer in self._train:
             self._distancies.append(fitxer.calcula_distancia (self._document))
 
         self._distancies.sort()
