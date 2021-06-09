@@ -8,6 +8,7 @@ from agrupador import Agrupador
 from visualitzador import Visualitzador
 import pickle
 from tqdm import tqdm
+import os
 
 #+--------------------------------------------------------------------------+#
 #   Definim les classes                                                      #
@@ -24,6 +25,41 @@ class Controller():
         
         
     def prepara_documents(self):
+        if self._t_document == "txt":
+            if self._t_representacio == "bow":
+                if self._t_distancia == "cos":
+                    #Calcula distancia cos, representacio bow en texts
+                    for i in os.listdir(self._train):
+                        
+                else:
+                    #Calcula distancia int, representacio bow en texts
+
+            else:
+                
+                if self._t_distancia == "cos":
+                    #Calcula distancia cos, representacio TfIdf en texts
+                
+                
+                else:
+                    #Calcula distancia int, representacio TfIdf en texts
+        else:
+            if self._t_representacio == "bow":
+                if self._t_distancia == "cos":
+                    #Calcula distancia cos, representacio bow en imatges
+                else:
+                    #Calcula distancia int, representacio bow en imatges
+            else:
+                if self._t_distancia == "cos":
+                    #Calcula distancia cos, representacio TfIdf en imatges
+                else:
+                    #Calcula distancia int, representacio TfIdf en imatges
+
+            
+        
+
+
+
+
 # =============================================================================
 #         if tipus == "txt":  
 #                 vocabulary_txt = []
