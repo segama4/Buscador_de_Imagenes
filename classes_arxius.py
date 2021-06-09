@@ -63,8 +63,11 @@ class Arxiu(ABC):
     @abstractmethod        
     def get_distance(self, training_file):
         raise NotImplementedError()
-        
-        
+    
+    @abstractmethod        
+    def visualitza(self, training_file):
+        raise NotImplementedError()
+    
 class Imatge(Arxiu):
    
     def __init__(self, file_name, location, vocabulary, label):

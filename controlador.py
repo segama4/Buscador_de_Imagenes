@@ -68,7 +68,7 @@ class Controller():
         print("ERROR")
         
         
-        #self.guardar(nom_database, ["recuperacio", resultat])
+        self.guardar(nom_database, ["recuperacio", self._t_document, resultat])
         
     def realitza_agrupacio(self, nom_database):
         self._agrupador = Agrupador(self._train, self._k)
@@ -79,7 +79,7 @@ class Controller():
             self._agrupador.calcula_representant()
             
         resultat = self._agrupador.get_results()
-        self.guardar(nom_database, ["agrupacio", resultat])
+        self.guardar(nom_database, ["agrupacio", self._t_document, resultat])
         
     def visualitza_resultats(self, nom_database):
         self._visualitzador = Visualitzador(nom_database)

@@ -43,7 +43,7 @@ def retrieval():
 |  |_)  | |  |____ |  |\   |    \    /    |  | |  |\   | |  |__| | |  `--'  |     |  |     |__|
 |______/  |_______||__| \__|     \__/     |__| |__| \__|  \______|  \______/      |__|     (__)\n""") 
     
-        print("𝚂𝚎𝚕𝚎𝚌𝚌𝚒𝚘𝚗𝚊 𝚚𝚞𝚎 𝚟𝚘𝚕𝚜 𝚏𝚎𝚛!\n")
+        print("𝚂𝚎𝚕𝚎𝚌𝚌𝚒𝚘𝚗𝚊 𝚚𝚞𝚎 𝚟𝚘𝚕𝚜 𝚏𝚎𝚛!")
         vegada += 1    
         
         try:
@@ -61,29 +61,49 @@ def retrieval():
                 #database = input("Arxiu del database: ")
                 
                 while t_document == 0:
-                    t_document = int(input("Document:\n1- Imatge\n2- Text\n\n"))
+                    try:
+                        t_document = int(input("Document:\n1- Imatge\n2- Text\n\n"))
+                    except:
+                        print("ERROR: Opció NO vàlida. Tria una opció correcta!")
+                        t_document = int(input("Document:\n1- Imatge\n2- Text\n\n"))
                     if t_document == 1: t_document = "imatge"; train = "cifrar"
                     elif t_document == 2: t_document = "text"; train = "newsgroups"
                     else: t_document = 0; print("\nOpció NO vàlida!\n")
                 
                 while t_representacio == 0:
-                    t_representacio = int(input("Representació:\n1- Bow\n2- Tf-idf\n\n"))
+                    try:
+                        t_representacio = int(input("Representació:\n1- Bow\n2- Tf-idf\n\n"))
+                    except:
+                        print("ERROR: Opció NO vàlida. Tria una opció correcta!")
+                        t_representacio = int(input("Representació:\n1- Bow\n2- Tf-idf\n\n"))
                     if t_representacio == 1: t_representacio = "bow"
                     elif t_representacio == 2: t_representacio = "tf-idf"
                     else: t_representacio = 0; print("\nOpció NO vàlida!\n")
                     
                 while t_distancia == 0:
-                    t_distancia = int(input("Distància:\n1- Imatge\n2- Text\n\n"))
+                    try:
+                        t_distancia = int(input("Distància:\n1- Imatge\n2- Text\n\n"))
+                    except:
+                        print("ERROR: Opció NO vàlida. Tria una opció correcta!")
+                        t_distancia = int(input("Distància:\n1- Imatge\n2- Text\n\n"))
                     if t_distancia == 1: t_document = "imatge"
                     elif t_distancia == 2: t_distancia = "text"
                     else: t_distancia = 0; print("\nOpció NO vàlida!\n")
                     
                 while t_model == 0:
-                    t_model = int(input("Model:\n1- Recuperació\n2- Agrupament\n\n"))
+                    try:
+                        t_model = int(input("Model:\n1- Recuperació\n2- Agrupament\n\n"))
+                    except:
+                        print("ERROR: Opció NO vàlida. Tria una opció correcta!")
+                        t_model = int(input("Model:\n1- Recuperació\n2- Agrupament\n\n"))
                     if t_model == 1: t_document = "recuperacio"
                     elif t_model == 2: 
                         t_model = "agrupament";
-                        k = int(input("\nIntrodueix el número de grups: \n"))
+                        try:
+                            k = int(input("\nIntrodueix el número de grups: \n"))
+                        except:
+                            print("ERROR: Opció NO vàlida. Tria una opció correcta!")
+                            k = int(input("\nIntrodueix el número de grups: \n"))
                     else: t_model = 0; print("\nOpció NO vàlida!\n")
                 
                 start_time = time.time()
