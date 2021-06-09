@@ -29,10 +29,10 @@ class Visualitzador():
             print("\nS'ha carregat correctament el database de recuperació!")
         if self._database[0] == "recuperacio":
             self._visualitzador_basic = Visualitzador_Basic_Recuperacio()
-            #self._visualitzador_dinamic = Visualitzador_Dinamic_Recuperacio()
-        #else:
-            #self._visualitzador_basic = Visualitzador_Basic_Agrupacio()
-            #self._visualitzador_dinamic = Visualitzador_Dinamic_Agrupacio()
+            self._visualitzador_dinamic = Visualitzador_Dinamic_Recuperacio()
+        else:
+            self._visualitzador_basic = Visualitzador_Basic_Agrupacio()
+            self._visualitzador_dinamic = Visualitzador_Dinamic_Agrupacio()
             
     def escull_opcio(self):
         print("\n| 𝙱𝚎𝚗𝚟𝚒𝚗𝚐𝚞𝚝𝚜 𝚊𝚕 𝚅𝚒𝚜𝚞𝚊𝚕𝚒𝚝𝚣𝚊𝚍𝚘𝚛! (𝚟𝚎𝚛𝚜𝚒𝚘 𝟸.𝟸.𝟹) |\n")
@@ -95,8 +95,17 @@ class Visualitzador_Basic_Recuperacio(Visualitzador_Basic):
 #                                 fontsize = 'xx-small') 
 # =============================================================================
         
-
 class Visualitzador_Basic_Agrupacio(Visualitzador_Basic):
+    
+    def visualitza(self, database):
+        print("ERROR")
+        
+class Visualitzador_Dinamic_Recuperacio(Visualitzador_Basic):
+    
+    def visualitza(self, database):
+        print("ERROR")
+        
+class Visualitzador_Dianmic_Agrupacio(Visualitzador_Basic):
     
     def visualitza(self, database):
         print("ERROR")
