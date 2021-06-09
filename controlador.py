@@ -109,7 +109,7 @@ class Controller():
     def realitza_agrupacio(self, nom_database):
         self._agrupador = Agrupador(self._train, self._k)
         error = 2 
-        while error > 0.3:
+        while error > 0.2:
             error = self._agrupador.calcula_distancies()
             self._agrupador.calcula_grups()
             self._agrupador.calcula_representant()

@@ -63,37 +63,35 @@ class Visualitzador_Basic_Recuperacio(Visualitzador_Basic):
     
     def visualitza(self, database):
         print("ERROR")
-# =============================================================================
-#         if self._database[0] == "recuperacio":
-#             for recuperacio in self._database[1]:
-#                 
-#             if tipus == "img":
-#             if len(result) == 1:  
-#                 fig, axs = plt.subplots()
-#                 axs.axis('off')
-#                 axs.imshow(image.imread(result[0][0].location))
-#             else:    
-#                 fig, axs = plt.subplots(1, len(result))
-#                 for i in range(len(result)): 
-#                     axs[i].axis('off')
-#                     axs[i].imshow(image.imread(result[i][0].location))
-#         else:
-#             if len(result) == 1: 
-#                 fig, axs = plt.subplots()
-#                 axs.axis('off')
-#                 with open(result[i][0].location, "r") as file:
-#                     txt = file.read()
-#                 axs.text(0, 1, txt, va = 'top', clip_on = True, 
-#                          fontsize = 'xx-small')
-#             else:
-#                 fig, axs = plt.subplots(1, len(result))
-#                 for i in range(len(result)):  
-#                     axs[i].axis('off')
-#                     with open(result[i][0].location, "r") as file:
-#                         txt = file.read()
-#                     axs[i].text(0, 1, txt, va = 'top', clip_on = True, 
-#                                 fontsize = 'xx-small') 
-# =============================================================================
+        if self._database[0] == "recuperacio":
+            for recuperacio in self._database[1]:
+                
+            if tipus == "img":
+            if len(result) == 1:  
+                fig, axs = plt.subplots()
+                axs.axis('off')
+                axs.imshow(image.imread(result[0][0].location))
+            else:    
+                fig, axs = plt.subplots(1, len(result))
+                for i in range(len(result)): 
+                    axs[i].axis('off')
+                    axs[i].imshow(image.imread(result[i][0].location))
+        else:
+            if len(result) == 1: 
+                fig, axs = plt.subplots()
+                axs.axis('off')
+                with open(result[i][0].location, "r") as file:
+                    txt = file.read()
+                axs.text(0, 1, txt, va = 'top', clip_on = True, 
+                         fontsize = 'xx-small')
+            else:
+                fig, axs = plt.subplots(1, len(result))
+                for i in range(len(result)):  
+                    axs[i].axis('off')
+                    with open(result[i][0].location, "r") as file:
+                        txt = file.read()
+                    axs[i].text(0, 1, txt, va = 'top', clip_on = True, 
+                                fontsize = 'xx-small') 
         
 class Visualitzador_Basic_Agrupacio(Visualitzador_Basic):
     
