@@ -6,14 +6,13 @@
 
 from controlador import Controller
 
-
 #+--------------------------------------------------------------------------+#
 #   Definim les classes                                                      #
 #+--------------------------------------------------------------------------+#
 
 class Buscador():
     
-    def __init__(self, t_document, t_representacio, t_distancia, t_model, train, k):
+    def __init__(self, t_document, t_representacio, t_distancia, t_model, train, k = 0):
         self._t_model = t_model
         self._controlador = Controller(t_document, t_representacio, t_distancia, train, k)
         
@@ -23,7 +22,7 @@ class Buscador():
         if self._t_model == "recuperacio":
             self._controlador.realitza_recuperacio(nom_database)
         else:
-            self._controlador.realitza_recuperacio(nom_database)
+            self._controlador.realitza_agrupacio(nom_database)
         
     def visualitza_resultats(self, nom_database):
         self._controlador.visualitza_resultats(nom_database)

@@ -30,15 +30,17 @@ class Agrupador():
                 self._distancies[fitxer].append([fitxer.calcula_distancia(
                 self._results[grup][0]), self._results[grup][0]])
         error = max([distancia for distancia in [distancia for distancia in [self._distancies[fitxer] for fitxer in self._distancies.keys()]]])
+        #return error
+        return 0.1 
     
     def calcula_grups(self):
         for fitxer in self._distancies:
-            
+            print("ERROR")
         
         
     def calcula_representant(self):
         for group in range(self._k):
-            
+            print("ERROR")
         
         
     def get_results(self):
