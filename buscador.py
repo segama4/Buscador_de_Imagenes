@@ -26,8 +26,7 @@ class Buscador():
     def visualitza_resultats(self, nom_database):
         self._controlador.visualitza_resultats(nom_database)
 
-    def tria_menu(self):
-        vegada = 0
+    def tria_menu(self, vegada):
         buscador = None
         nom_database = "database.pckl"
         
@@ -124,7 +123,7 @@ class Buscador():
                 print("\nERROR: ", missatge)
                 return True
             except AttributeError:
-                self._controlador = Controller(None, None, None, None, None)
+                self._controlador = Controller(None, None, None, None)
                 self.visualitza_resultats(self._database)
                 return True
         else:

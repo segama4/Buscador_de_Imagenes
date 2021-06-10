@@ -125,16 +125,18 @@ class Controller():
         while opcio == 1 or opcio == 2:
             if opcio == 1:
                 self._visualitzador.visualitzador_basic()                
-                opcio = self._visualitzador.escolleix_opcio()
+                opcio = self._visualitzador.escull_opcio()
             else:
                 self._visualitzador.visualitzador_dinamic()
-                opcio = self._visualitzador.escolleix_opcio()
+                opcio = self._visualitzador.escull_opcio()
         
         loop = tqdm(total = 5000, position = 0, leave = False)
         for k in range(5000):
             loop.set_description("Tancant visualitzador...".format(k))
             loop.update(1)
         loop.close()
+        
+        print("\n--------------------------------------\n")
             
     def guardar(self, fitxer, dades):
         fitxer = open(fitxer, 'wb')

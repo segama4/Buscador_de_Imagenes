@@ -4,7 +4,7 @@
 #                                                                            #
 #   Dades del projecte:                                                      #
 #                                                                            #
-#      - Nom de la práctica: Projecte                                        #
+#      - Nom de la práctica: Projecte Versió 2                               #
 #      - Data d'entrega:     9 / 05 / 2021                                   #
 #      - Nom dels alumnes:   Sergi Garriga Mas                               #
 #                            Sergio Trigueros                                #
@@ -22,15 +22,17 @@
 
 from buscador import Buscador
 
-#+----------------------------------2----------------------------------------+#
+#+--------------------------------------------------------------------------+#
 #    Definim les funcions                                                    #
 #+--------------------------------------------------------------------------+#
 
 def retrieval(nom_database):
     buscador = Buscador(nom_database)
     opcio = True
+    vegada = 0
     while opcio:
-        opcio = buscador.tria_menu()
+        opcio = buscador.tria_menu(vegada)
+        vegada += 1
                   
 # =============================================================================
 #     Iniciem la funció
