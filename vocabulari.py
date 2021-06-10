@@ -14,7 +14,6 @@ import pickle
 #+--------------------------------------------------------------------------+#
 
 class Vocabulary(ABC):
-    
     def __init__(self, vocabulary):
         self._vocabulary = vocabulary
     
@@ -30,7 +29,6 @@ class Vocabulary(ABC):
             raise AssertionError("ERROR: Vocabulary no llegit!")
         
 class Txt_Vocabulary(Vocabulary):
-   
     def __init__(self):
         super().__init__(vocabulary = np.array([]))
 
@@ -40,7 +38,6 @@ class Txt_Vocabulary(Vocabulary):
                 self._vocabulary = np.append(self._vocabulary, paraula[:-1])
         
 class Img_Vocabulary(Vocabulary):
-
     def __init__(self):
         super().__init__(vocabulary = None)
 
@@ -52,3 +49,12 @@ class Img_Vocabulary(Vocabulary):
         bow_extractor = cv2.BOWImgDescriptorExtractor(sift, matcher)
         bow_extractor.setVocabulary(vocabulary)
         self._vocabulary = bow_extractor
+        
+class Tfidf_Vocabulary(Vocabulary):
+    def __init__(self):
+        super().__init__(vocabulary = [])
+
+    def read(self, vocabulary_file):
+        with open(vocabulary_file, "r") as vocabulary_file:
+            for paraula in vocabulary_file:
+                self._vocabulary.append(self._vocabulary, paraula[:-1])

@@ -20,16 +20,14 @@
 #   Definim els imports                                                      #
 #+--------------------------------------------------------------------------+#
 
-import time
 from buscador import Buscador
-
 
 #+----------------------------------2----------------------------------------+#
 #    Definim les funcions                                                    #
 #+--------------------------------------------------------------------------+#
 
-def retrieval():
-    buscador = Buscador()
+def retrieval(nom_database):
+    buscador = Buscador(nom_database)
     opcio = True
     while opcio:
         opcio = buscador.tria_menu()
@@ -38,7 +36,7 @@ def retrieval():
 #     Iniciem la funció
 # =============================================================================
 
-retrieval()
+retrieval("database.pckl")
 
 
 

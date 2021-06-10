@@ -36,8 +36,8 @@ class Agrupador():
         for group in range(self._k):
             mitjana
             self._results[group][1].append(mitjana)
-        
-        
-        
+            
+        # Només falta calcular mitjana i canviar el representant del grup
+    
     def get_results(self):
         return self._results

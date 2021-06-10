@@ -61,7 +61,7 @@ class Visualitzador_Basic(ABC):
         
 class Visualitzador_Basic_Recuperacio(Visualitzador_Basic):
     
-    def visualitza(self, database):
+    def visualitza(self):
         print("ERROR")
         if self._database[0] == "recuperacio":
             for recuperacio in self._database[1]:
@@ -99,11 +99,41 @@ class Visualitzador_Basic_Agrupacio(Visualitzador_Basic):
         print("ERROR")
         
 class Visualitzador_Dinamic_Recuperacio(Visualitzador_Basic):
+    def __init__(self):
+        self._offset = 0
     
     def visualitza(self, database):
-        print("ERROR")
+        def mostrar_documents (self):
+            if len(self._distancies) == 0:
+                return None
+            else:
+                return self._distancies[self._offset*5:(self._offset*5)+4]
+    
+        def avançar_5 (self):
+            self._offset += 1
+    
+        def retornar_5 (self):
+            if self._offset != 0:
+                self._offset -= 1
+            else:
+                raise IndexError
         
 class Visualitzador_Dianmic_Agrupacio(Visualitzador_Basic):
-    
+    def __init__(self):
+        self._offset = 0
+        
     def visualitza(self, database):
-        print("ERROR")
+        def mostrar_documents (self):
+            if len(self._distancies) == 0:
+                return None
+            else:
+                return self._distancies[self._offset*5:(self._offset*5)+4]
+    
+        def avançar_5 (self):
+            self._offset += 1
+    
+        def retornar_5 (self):
+            if self._offset != 0:
+                self._offset -= 1
+            else:
+                raise IndexError

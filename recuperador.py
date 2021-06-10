@@ -1,36 +1,36 @@
-import os
-import re
-import matplotlib.image as image
-import matplotlib.pyplot as plt
+# -*- coding: utf-8 -*-
+
+#+--------------------------------------------------------------------------+#
+#   Importem mòduls                                                          #
+#+--------------------------------------------------------------------------+#
+
+from indexador import Indexador
+from distancies import Cosinus, Intersection
+
+#+--------------------------------------------------------------------------+#
+#   Definim les classes                                                      #
+#+--------------------------------------------------------------------------+#
 
 
 class Recuperador ():
-    def __init__(self, document, train):
-        self._document = document
+    def __init__(self, document, train, t_distancia):
+        self._document = [document for document in train if document.nom == document][0]
         self._train = train
         self._distancies = []
         self._offset = 0
+        if t_distancia == "cosinus": self._operador = Cosinus()
+        else: self._operador = Intersection(train, document)
 
-    def calcula_distancies (self):
+    def processa_recuperacio(self):
         for fitxer in self._train:
-            self._distancies.append(fitxer.calcula_distancia (self._document))
+            if fitxer != self._document:
+                self._distancies.append(fitxer.calcula_distancia (self._document))
 
         self._distancies.sort()
-
-    def mostrar_documents (self):
-        if len(self._distancies) == 0:
-            return None
-        else:
-            return self._distancies[self._offset*5:(self._offset*5)+4]
-
-    def avançar_5 (self):
-        self._offset += 1
-
-    def retornar_5 (self):
-        if self._offset != 0:
-            self._offset -= 1
-        else:
-            raise IndexError
+    
+    def get_results(self):
+        return [self._document, self._distancies]
+    
         
 
 

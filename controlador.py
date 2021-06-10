@@ -6,6 +6,10 @@
 
 from agrupador import Agrupador
 from visualitzador import Visualitzador
+from recuperador import Recuperador
+from representacio import Bow, TfIdf
+from vocabulari import Txt_Vocabulary, Img_Vocabulary, Tfidf_Vocabulary
+from classes_arxius import Document, Imatge
 import pickle
 from tqdm import tqdm
 import os
@@ -16,98 +20,96 @@ import os
 
 class Controller():
     
-    def __init__(self, t_document, t_representacio, t_distancia, train, k):
+    def __init__(self, t_document, t_representacio, t_distancia, train):
         self._t_document = t_document
         self._t_representacio = t_representacio
         self._t_distancia = t_distancia
         self._train = train
-        self._k = k
         
         
     def prepara_documents(self):
+        
+        #Proposta Sergio:
         if self._t_document == "txt":
             if self._t_representacio == "bow":
                 if self._t_distancia == "cos":
                     #Calcula distancia cos, representacio bow en texts
                     for i in os.listdir(self._train):
-                        
+                        print("ERRROr")
+
                 else:
+                    print("ERRROr")
                     #Calcula distancia int, representacio bow en texts
 
             else:
                 
                 if self._t_distancia == "cos":
                     #Calcula distancia cos, representacio TfIdf en texts
-                
+                    print("ERRROr")
+
                 
                 else:
+                    print("ERRROr")
                     #Calcula distancia int, representacio TfIdf en texts
         else:
             if self._t_representacio == "bow":
                 if self._t_distancia == "cos":
+                    print("ERRROr")
                     #Calcula distancia cos, representacio bow en imatges
                 else:
+                    print("ERRROr")
                     #Calcula distancia int, representacio bow en imatges
             else:
                 if self._t_distancia == "cos":
+                    print("ERRROr")
                     #Calcula distancia cos, representacio TfIdf en imatges
                 else:
+                    print("ERRROr")
                     #Calcula distancia int, representacio TfIdf en imatges
 
-            
         
-
-
-
-
-# =============================================================================
-#         if tipus == "txt":  
-#                 vocabulary_txt = []
-#                 with open(vocabulary_file, "r") as file:
-#                     for paraula in file:
-#                         vocabulary_txt.append(paraula[:-1])
-#                         
-#                 google = Buscador(vocabulary_txt, None)
-#                 google.prepare_test_database(train)
-#                 file_list = os.listdir(test)
-#                 for file in file_list:
-#                     base_file = Document(file, test+"/"+file, vocabulary_txt, None)
-#                     base_file.read()
-#                     base_file.get_representation()
-#                     result = google.make_clasification(base_file, k)
-#                     google.view_results(result, tipus)
-# 
-#         else:
-#             sift = cv2.SIFT_create()
-#             matcher = cv2.FlannBasedMatcher() 
-#             with open(vocabulary_file, 'rb') as fitxer:
-#                 vocabulary = pickle.load(fitxer)
-#             bow_extractor = cv2.BOWImgDescriptorExtractor(sift, matcher)
-#             bow_extractor.setVocabulary(vocabulary)
-#             vocabulary_img = bow_extractor
-#         
-#             google = Buscador(None, vocabulary_img)
-#             google.prepare_test_database(train)
-#             file_list = os.listdir(test)
-#             for file in file_list:       
-#                 base_file = Imatge(file, test+"/"+file, vocabulary_img, None)
-#                 base_file.read()
-#                 base_file.get_representation()
-#                 result = google.make_clasification(base_file, k)
-#                 google.view_results(result, tipus)
-# =============================================================================
+        # Proposta Sergi:
+        train = []    
+        if self._t_document == "text":
+            vocabulary = Txt_Vocabulary()
+            vocabulary.read(      )  # Falta posar el nom de l'arxiu. No tocar.
+            if self._t_representacio == "bow":
+                representador = Bow(vocabulary)
+            else:
+                vocabulary_tfidf = Tfidf_Vocabulary() 
+                vocabulary_tfidf.read(    ) # Falta posar el nom de l'arxiu. No tocar.
+                representador = TfIdf(vocabulary, vocabulary_tfidf)
+            file_list = os.listdir(self._train)
+            for file in file_list: 
+                train.append(Document(file, train+"/"+file, vocabulary, representador))
         
+        else:
+            vocabulary = Img_Vocabulary()
+            vocabulary.read(      )  # Falta posar el nom de l'arxiu. No tocar.
+            if self._t_representacio == "bow":
+                representador = Bow(vocabulary)
+            else:
+                vocabulary_tfidf = Tfidf_Vocabulary() 
+                vocabulary_tfidf.read(    ) # Falta posar el nom de l'arxiu. No tocar.
+                representador = TfIdf(vocabulary, vocabulary_tfidf)
+            file_list = os.listdir(self._train)
+            for file in file_list: 
+                train.append(Document(file, train+"/"+file, vocabulary, representador))
+                train[len(train)-1].read()
+                train[len(train)-1].get_representation()
+        
+        self._train = train
+        
+        
+    def realitza_recuperacio(self, nom_database, document_query):
         print("ERROR")
-        #self._train = resultat
-        
-    def realitza_recuperacio(self, nom_database):
-        print("ERROR")
-        
-        
+        self._recuperador = Recuperador(document_query, self._train)
+        self._recuperador.processa_recuperacio()
+        resultat = self._recuperador.get_results()
         self.guardar(nom_database, ["recuperacio", self._t_document, resultat])
         
-    def realitza_agrupacio(self, nom_database):
-        self._agrupador = Agrupador(self._train, self._k)
+    def realitza_agrupacio(self, nom_database, k):
+        self._agrupador = Agrupador(self._train, k)
         error = 2 
         while error > 0.2:
             error = self._agrupador.calcula_distancies()

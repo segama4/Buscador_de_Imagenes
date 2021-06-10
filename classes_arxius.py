@@ -17,13 +17,13 @@ import matplotlib.image as image
 
 class Arxiu(ABC):
     
-    def __init__(self, file_name, location, vocabulary, label):
+    def __init__(self, file_name, location, vocabulary, representador):
         self._file_name = file_name
         self._location = location
         self._vocabulary = vocabulary
-        self._label = label
+        self._label = None
         self._file = ""
-        self._representation = np.array([])
+        self._representador = representador
         
     @property
     def file_name(self):
@@ -39,6 +39,8 @@ class Arxiu(ABC):
     
     @property
     def label(self):
+        if self._label == None:
+            self.get_label()
         return self._label
     
     @property
@@ -59,19 +61,16 @@ class Arxiu(ABC):
     @abstractmethod        
     def get_representation(self):
         raise NotImplementedError()
-        
-    @abstractmethod        
-    def get_distance(self, training_file):
-        raise NotImplementedError()
     
     @abstractmethod        
     def visualitza(self, training_file):
         raise NotImplementedError()
     
+    
 class Imatge(Arxiu):
    
-    def __init__(self, file_name, location, vocabulary, label):
-        super().__init__(file_name, location, vocabulary, label)
+    def __init__(self, file_name, location, vocabulary, representador):
+        super().__init__(file_name, location, vocabulary, representador)
         
     def read(self):
         self._file = image.imread(self._location)
@@ -90,29 +89,35 @@ class Imatge(Arxiu):
         img = cv2.imread(self._location)
         img_gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
         self._representation = compute_bow_images(img_gray, self._vocabulary)
-        
-    def get_distance(self, training_file):
-        dist = np.sum(np.minimum(self._representation, 
-                                 training_file.representation))
-        den = min(np.sum(self._representation),
-                              np.sum(training_file.representation))
-        if den != 0:
-            return 1 - (dist / den)
-        else:
-            return 1
     
+    def visualitza(self, llista_documents):
+        print("ERROR")
+     
+    def get_label(self):
+        for letter in self._file_name: 
+            guio = 0
+            punt = 0
+            etiqueta = ""
+            for lletra in self._file_name:
+                if lletra == ".":
+                    punt += 1 
+                if guio == 1 and punt == 0:
+                    etiqueta += lletra 
+                if lletra == "_":
+                    guio += 1
+            self._label = re.sub("[^a-zA-Z0-9]", " ", etiqueta)
+
 
 class Document(Arxiu):
      
-    def _init_(self, file_name, location, vocabulary, label):
-        super().__init__(file_name, location, vocabulary, label)
+    def _init_(self, file_name, location, vocabulary, representador):
+        super().__init__(file_name, location, vocabulary, representador)
 
     def read(self):
         with open(self._location, "r") as file:
             self._file = file.read()
        
     def get_representation(self):
-        
         counter = collections.Counter(np.array(re.sub("[^a-zA-Z0-9]", " ", 
                                             self._file.lower()).split()))
         representation = []
@@ -122,3 +127,20 @@ class Document(Arxiu):
             else:
                 representation.append(counter[word])
         self._representation = np.array(representation)
+        
+    def visualitza(self, llista_documents):
+        print("ERROR")
+        
+    def get_label(self):
+        for letter in self._file_name: 
+            guio = 0
+            punt = 0
+            etiqueta = ""
+            for lletra in self._file_name:
+                if lletra == ".":
+                    punt += 1 
+                if guio == 1 and punt == 0:
+                    etiqueta += lletra 
+                if lletra == "_":
+                    guio += 1
+            etiqueta = re.sub("[^a-zA-Z0-9]", " ", etiqueta)

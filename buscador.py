@@ -12,21 +12,21 @@ from controlador import Controller
 
 class Buscador():
     
-    def __init__(self):
-        self._controlador = Controller(t_document, t_representacio, t_distancia, train, k)
+    def __init__(self, nom_database):
+        self._database = nom_database
         
-    def crea_model(self, nom_database):
+    def crea_model(self, nom_database, k, document_query):
         self._controlador.prepara_documents()
         
         if self._t_model == "recuperacio":
-            self._controlador.realitza_recuperacio(nom_database)
+            self._controlador.realitza_recuperacio(nom_database, document_query)
         else:
-            self._controlador.realitza_agrupacio(nom_database)
+            self._controlador.realitza_agrupacio(nom_database, k)
         
     def visualitza_resultats(self, nom_database):
         self._controlador.visualitza_resultats(nom_database)
 
-    def menu(self):
+    def tria_menu(self):
         vegada = 0
         buscador = None
         nom_database = "database.pckl"
@@ -52,9 +52,7 @@ class Buscador():
             try: 
                 print("\n𝚂𝚎𝚕𝚎𝚌𝚌𝚒𝚘𝚗𝚊 𝚎𝚕𝚜 𝚙𝚊𝚛𝚊𝚖𝚎𝚝𝚛𝚎𝚜 𝚊𝚖𝚋 𝚎𝚕𝚜 𝚚𝚞𝚎 𝚟𝚘𝚕𝚜 𝚝𝚛𝚎𝚋𝚊𝚕𝚕𝚊𝚛!")
             
-                t_document = 0; t_representacio = 0; t_distancia = 0; t_model = 0; k = 0;
-                
-                #database = input("Arxiu del database: ")
+                t_document = 0; t_representacio = 0; t_distancia = 0; t_model = 0; k = 0; document_query = None;
                 
                 while t_document == 0:
                     try:
@@ -92,9 +90,15 @@ class Buscador():
                     except:
                         print("ERROR: Opció NO vàlida. Tria una opció correcta!")
                         t_model = int(input("Model:\n1- Recuperació\n2- Agrupament\n\n"))
-                    if t_model == 1: t_document = "recuperacio"
+                    if t_model == 1: 
+                        t_document = "recuperacio"
+                        try:
+                            document_query = input("\nIntrodueix el document Query: \n")
+                        except:
+                            print("ERROR: Opció NO vàlida. Tria una opció correcta!")
+                            document_query = input("\nIntrodueix el document Query: \n")
                     elif t_model == 2: 
-                        t_model = "agrupament";
+                        t_model = "agrupament"
                         try:
                             k = int(input("\nIntrodueix el número de grups: \n"))
                         except:
@@ -102,10 +106,10 @@ class Buscador():
                             k = int(input("\nIntrodueix el número de grups: \n"))
                     else: t_model = 0; print("\nOpció NO vàlida!\n")
                 
-                start_time = time.time()
-                buscador = Buscador(t_document, t_representacio, t_distancia, t_model, train, k)
-                buscador.crea_model(nom_database)
-                print("\nFi! Temps =", time.time()-start_time, "segons.\n\n--------------------------------------\n")
+                self._controlador = Controller(t_document, t_representacio, t_distancia, train)
+                self._t_model = t_model 
+                self.crea_model(self._database, k, document_query)
+                print("\nFi! \n\n--------------------------------------\n")
                 return True
             
             except AssertionError as missatge:
@@ -120,8 +124,8 @@ class Buscador():
                 print("\nERROR: ", missatge)
                 return True
             except AttributeError:
-                buscador = Buscador(None, None, None, None, None, None, None)
-                buscador.visualitza_resultats(nom_database)
+                self._controlador = Controller(None, None, None, None, None)
+                self.visualitza_resultats(self._database)
                 return True
         else:
             print("\n𝙵𝚒𝚗𝚜 𝚊𝚟𝚒𝚊𝚝!")
