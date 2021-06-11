@@ -31,12 +31,12 @@ class Controller():
         train = []    
         if self._t_document == "text":
             vocabulary = Txt_Vocabulary()
-            vocabulary.read(      )  # Falta posar el nom de l'arxiu. No tocar.
+            vocabulary.read("./newsgroup/retrieval/train/vocabulary.txt")
             if self._t_representacio == "bow":
                 representador = Bow(vocabulary)
             else:
                 vocabulary_tfidf = Tfidf_Vocabulary() 
-                vocabulary_tfidf.read(    ) # Falta posar el nom de l'arxiu. No tocar.
+                vocabulary_tfidf.read("./newsgroup/vocabulary_idf.txt")
                 representador = TfIdf(vocabulary, vocabulary_tfidf)
             file_list = os.listdir(self._train)
             for file in file_list: 
@@ -44,18 +44,18 @@ class Controller():
         
         else:
             vocabulary = Img_Vocabulary()
-            vocabulary.read(      )  # Falta posar el nom de l'arxiu. No tocar.
+            vocabulary.read("./cifrar/retrieval/train/vocabulary.dat")
             if self._t_representacio == "bow":
                 representador = Bow(vocabulary)
             else:
                 vocabulary_tfidf = Tfidf_Vocabulary() 
-                vocabulary_tfidf.read(    ) # Falta posar el nom de l'arxiu. No tocar.
+                vocabulary_tfidf.read("./cifrar/vocabulary/idf.txt")
                 representador = TfIdf(vocabulary, vocabulary_tfidf)
-            file_list = os.listdir(self._train)
-            for file in file_list: 
-                train.append(Document(file, train+"/"+file, vocabulary, representador))
-                train[len(train)-1].read()
-                train[len(train)-1].get_representation()
+        file_list = os.listdir(self._train)
+        for file in file_list: 
+            train.append(Document(file, train+"/"+file, vocabulary, representador))
+            train[len(train)-1].read()
+            train[len(train)-1].get_representation()
         self._train = train
         
         

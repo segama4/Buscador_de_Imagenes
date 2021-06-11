@@ -60,8 +60,8 @@ class Buscador():
                     except:
                         print("ERROR: Opció NO vàlida. Tria una opció correcta!")
                         t_document = int(input("Document:\n1- Imatge\n2- Text\n\n"))
-                    if t_document == 1: t_document = "imatge"; train = "cifrar"
-                    elif t_document == 2: t_document = "text"; train = "newsgroups"
+                    if t_document == 1: t_document = "imatge"; train = self._carpeta_train_img
+                    elif t_document == 2: t_document = "text"; train = self._carpeta_train_txt
                     else: t_document = 0; print("\nOpció NO vàlida!\n")
                 
                 while t_representacio == 0:
@@ -76,12 +76,12 @@ class Buscador():
                     
                 while t_distancia == 0:
                     try:
-                        t_distancia = int(input("Distància:\n1- Imatge\n2- Text\n\n"))
+                        t_distancia = int(input("Distància:\n1- Cosinus\n2- Interseccio\n\n"))
                     except:
                         print("ERROR: Opció NO vàlida. Tria una opció correcta!")
-                        t_distancia = int(input("Distància:\n1- Imatge\n2- Text\n\n"))
-                    if t_distancia == 1: t_document = "imatge"
-                    elif t_distancia == 2: t_distancia = "text"
+                        t_distancia = int(input("Distància:\n1- Cosinus\n2- Interseccio\n\n"))
+                    if t_distancia == 1: t_document = "cosinus"
+                    elif t_distancia == 2: t_distancia = "interseccio"
                     else: t_distancia = 0; print("\nOpció NO vàlida!\n")
                     
                 while t_model == 0:
@@ -135,110 +135,3 @@ class Buscador():
         else:
             print("\n𝙵𝚒𝚗𝚜 𝚊𝚟𝚒𝚊𝚝!")
             return False
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def prepare_test_database(self, train):
-        self._database = []
-        file_list = os.listdir(train)
-        for file in file_list: 
-            if ".txt" in file:
-                for letter in file: 
-                        guio = 0
-                        punt = 0
-                        etiqueta = ""
-                        for lletra in file:
-                            if lletra == ".":
-                                punt += 1 
-                            if guio == 1 and punt == 0:
-                                etiqueta += lletra 
-                            if lletra == "_":
-                                guio += 1
-                        etiqueta = re.sub("[^a-zA-Z0-9]", " ", etiqueta)
-                self._database.append(Document(file, train+"/"+file, 
-                                               self._vocabulary_txt, 
-                                               etiqueta))
-                self._database[len(self._database)-1].read()
-                self._database[len(self._database)-1].get_representation()
-
-            else:
-                for letter in file: 
-                        guio = 0
-                        punt = 0
-                        etiqueta = ""
-                        for lletra in file:
-                            if lletra == ".":
-                                punt += 1 
-                            if guio == 3 and punt == 0:
-                                etiqueta += lletra 
-                            if lletra == "_":
-                                guio += 1
-                self._database.append(Imatge(file, train+"/"+file, 
-                                             self._vocabulary_img, 
-                                             etiqueta))
-                self._database[len(self._database)-1].read()
-                self._database[len(self._database)-1].get_representation()
-    
-def make_clasification(self, base_file, k):
-    try: 
-        result = [[x, base_file.get_distance(x)] for x in self._database]
-        result = sorted(result, key=lambda file : file[1])
-        print("\n",base_file.file_name,": ",[[x[0].file_name, x[1]] for x in result[:k]])
-        return(result[:k])
-    except:
-        raise AssertionError("ERROR: Ha ocurregut un error durant la " + 
-                             "clasificació de l'arxiu.")
-        
-def view_results(self, result, tipus):  
-    if tipus == "img":
-        if len(result) == 1:  
-            fig, axs = plt.subplots()
-            axs.axis('off')
-            axs.imshow(image.imread(result[0][0].location))
-        else:    
-            fig, axs = plt.subplots(1, len(result))
-            for i in range(len(result)): 
-                axs[i].axis('off')
-                axs[i].imshow(image.imread(result[i][0].location))
-    else:
-        if len(result) == 1: 
-            fig, axs = plt.subplots()
-            axs.axis('off')
-            with open(result[i][0].location, "r") as file:
-                txt = file.read()
-            axs.text(0, 1, txt, va = 'top', clip_on = True, 
-                     fontsize = 'xx-small')
-        else:
-            fig, axs = plt.subplots(1, len(result))
-            for i in range(len(result)):  
-                axs[i].axis('off')
-                with open(result[i][0].location, "r") as file:
-                    txt = file.read()
-                axs[i].text(0, 1, txt, va = 'top', clip_on = True, 
-                            fontsize = 'xx-small') 
