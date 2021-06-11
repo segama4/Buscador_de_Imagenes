@@ -32,24 +32,23 @@ class Recuperador ():
             for fitxer in os.listdir(self._train):
                 fitx = classes_arxius.Imatge(fitxer, self._train+"/"+fitxer, self._document.vocabulary, "")
                 fitx.get_representation()
-                if fitxer != self._document:
+                if fitx.file_name != self._document.file_name:
                     self._distancies.append(self._operador.calcula_distancia(self._document, fitx))
         else:
             for fitxer in os.listdir(self._train):
                 fitx = classes_arxius.Document(fitxer, self._train+"/"+fitxer, self._document.vocabulary, "")
                 fitx.get_representation()
-                if fitxer != self._document:
+                if fitx.file_name != self._document.file_name:
                     self._distancies.append(self._operador.calcula_distancia(self._document, fitx))
 
         self._distancies.sort()
     
     def get_results(self):
-        return [self._document, self._distancies]
+        return [self._document.file_name, self._distancies]
 
 
 
-"""
-Funcion por si quieres comprobarlo
+
 
 
 train = "cifrar/clustering"
@@ -57,11 +56,11 @@ vocabulary = Img_Vocabulary()
 vocabulary.read("cifrar/vocabulary/vocabulary.dat")
 document = classes_arxius.Imatge("image_1_class_airplane.jpg", "cifrar/clustering/image_1_class_airplane.jpg",vocabulary, "")
 document.get_representation()
-t_dis = "cosinus"
+t_dis = "i"
 
 recuperador = Recuperador(document, train, t_dis)
 recuperador.processa_recuperacio()
-print(str(recuperador.get_results()))"""
+print(str(recuperador.get_results()))
 
 
 
