@@ -6,7 +6,7 @@
 
 from abc import ABC, abstractmethod
 import numpy as np
-
+from math import sqrt
 #+--------------------------------------------------------------------------+#
 #   Definim les classes                                                      #
 #+--------------------------------------------------------------------------+#
@@ -15,13 +15,14 @@ class Distancia(ABC):
     def __init__(self, train, document):
         raise NotImplementedError
     
-    @abstractmethod
+"""    @abstractmethod
     def calcula_representacio(self, arxiu):
-        raise NotImplementedError
+        raise NotImplementedError"""
         
-class Cosinus(Distancia):
+class Intersection(Distancia):
     def __init__(self, train, document):
-        print("ERROR")
+        self._train = train
+        self._document = document
         
         
         
@@ -34,18 +35,20 @@ class Cosinus(Distancia):
             return 1 - (dist / den)
         else:
             return 1
-    def calcula_representacio(self, arxiu):
-        return
+
         
         
         
-class Intersection(Distancia):
+class Cosinus(Distancia):
     def __init__(self, train, document):
         self._indexador = Indexador(train, document)
         
         
         
     def calcula_distancia(self, arxiu_query, arxiu_2):
-        print("ERROR")
-    
+        dist = np.sum(arxiu_query.representation * arxiu_2.representation)
+        den1 = sqrt(np.sum(arxiu_query.representation**2))
+        den2 = sqrt(np.sum(arxiu_2.representation**2))
+        return 1 - ((dist)/(den1*den2))
+
         
