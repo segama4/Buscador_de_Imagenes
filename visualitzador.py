@@ -4,11 +4,7 @@
 #   Importem mòduls                                                          #
 #+--------------------------------------------------------------------------+#
 
-import os
-import re
-import matplotlib.image as image
 import matplotlib.pyplot as plt
-import pickle
 from abc import ABC, abstractmethod
 
 #+--------------------------------------------------------------------------+#

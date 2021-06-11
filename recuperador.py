@@ -4,8 +4,6 @@
 #   Importem mòduls                                                          #
 #+--------------------------------------------------------------------------+#
 
-from vocabulari import Vocabulary, Img_Vocabulary
-from indexador import Indexador
 from distancies import Cosinus, Intersection
 import classes_arxius
 import os

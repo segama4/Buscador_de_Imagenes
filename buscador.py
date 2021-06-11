@@ -20,12 +20,20 @@ class Buscador():
         self._carpeta_train_txt = "./newsgroup/retrieval/train"
         
     def crea_model(self, nom_database, k, document_query):
-        self._controlador.prepara_documents()
-        
-        if self._t_model == "recuperacio":
-            self._controlador.realitza_recuperacio(nom_database, document_query)
+        try: 
+            opcio = input("Vols actualitzar l'index? (S/N) ")
+            if opcio not in "SsNn":
+                raise AssertionError("Opció no vàlida.")
+        except:
+            opcio = input("Vols actualitzar l'index? (S/N) ")
+            
+        if opcio in "Ss": 
+            self._controlador.prepara_index()
         else:
-            self._controlador.realitza_agrupacio(nom_database, k)
+            if self._t_model == "recuperacio":
+                self._controlador.realitza_recuperacio(nom_database, document_query)
+            else:
+                self._controlador.realitza_agrupacio(nom_database, k)
         
     def visualitza_resultats(self, nom_database):
         self._controlador.visualitza_resultats(nom_database)
@@ -94,7 +102,7 @@ class Buscador():
                         t_model = "recuperacio"
                         try:
                             document_query = input("Introdueix el document Query: \n")
-                            if t_document == "imatge":
+                            if t_document == "imatge":-
                                 if document_query not in os.listdir(self._carpeta_train_img):
                                     raise AssertionError 
                             else: 

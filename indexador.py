@@ -4,21 +4,19 @@
 #   Importem mòduls                                                          #
 #+--------------------------------------------------------------------------+#
 
-import os
 
 #+--------------------------------------------------------------------------+#
 #   Definim les classes                                                      #
 #+--------------------------------------------------------------------------+#
 
-class Indexador():
+class Index():
     
-    def __init__(self, train, document_query):
+    def __init__(self, train, vocabulary):
+        self._vocabulary = vocabulary
         self._train = train
-        self._document_query = document_query
+        self._index = {}
         
     def crea_index(self):
-        
-        
-        
-        
-        return index
+        for i in self._vocabulary.vocabulary:
+            self._index[i] = [fitxer for fitxer in self._train if i in fitxer.representation]
+        return self._index
