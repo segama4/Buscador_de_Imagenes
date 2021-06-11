@@ -89,9 +89,10 @@ class Imatge(Arxiu):
         img = cv2.imread(self._location)
         img_gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
         self._representation = compute_bow_images(img_gray, self._vocabulary)
-    
-    def visualitza(self, llista_documents):
-        print("ERROR")
+
+    def visualitza(self, axs):
+            axs.axis('off')
+            axs.imshow(self.file)
      
     def get_label(self):
         for letter in self._file_name: 
@@ -128,8 +129,9 @@ class Document(Arxiu):
                 representation.append(counter[word])
         self._representation = np.array(representation)
         
-    def visualitza(self, llista_documents):
-        print("ERROR")
+    def visualitza(self, axs):
+        axs.axis('off')
+        axs.text(0, 1, self._file, va = 'top', clip_on = True, fontsize = 'xx-small') 
         
     def get_label(self):
         for letter in self._file_name: 

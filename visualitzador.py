@@ -15,30 +15,133 @@ from abc import ABC, abstractmethod
 #   Definim les classes                                                      #
 #+--------------------------------------------------------------------------+#
 
-class Visualitzador():
+class Visualitzador(ABC):
     
-    def __init__(self, nom_database):
-        fitxer = open(nom_database, 'ab+')
-        fitxer.seek(0)
-        try:
-            self._database = pickle.load(fitxer)
+    def __init__(self, database):
+        self._database = database
+        
+    @abstractmethod
+    def visualitza(self):
+        raise NotImplementedError
+        
+        
+class Visualitzador_Recuperacio(Visualitzador):
+    
+    def __init__(self, database):
+        super().__init__(database)
+            
+    def visualitza(self):
+        print("\n -- Visualitzant resultats --")
+        
+        index = 0
+        opcio_2 = 1
+        fig, axs = plt.subplots(5)
+        pos = 0
+        for i in range(index*5, (index*5)+5):
+            self._database[1][i].visualitza(axs[i])
+            pos += 1
+        
+        while opcio_2 in [1,2]:
+            print("𝗘𝘀𝗰𝗼𝗹𝗹𝗶𝘂 𝗾𝘂𝗶𝗻𝗮 𝗼𝗽𝗰𝗶𝗼 𝘃𝗼𝗹𝗲𝘂 𝗿𝗲𝗮𝗹𝗶𝘁𝘇𝗮𝗿:\n\
+    1 - Visualitzar els 5 documents següents.\n\
+    2 - Visualitzar els 5 documents anteriors.\n\
+    Altre núm. - Sortir")
+        
+            try:
+                opcio_2 = int(input("Opció: "))
+                if opcio_2 == 2 and index == 0:
+                    raise AssertionError("No hi ha documents anteriors.")
+            except AssertionError as missatge:
+                print("ERROR: ", missatge, "Tria una opció correcta!")
+            except:
+                print("ERROR: Opció NO vàlida. Tria una opció correcta!")
+                opcio_2 = int(input("Opció: "))
+        
+            if opcio_2 == 1:
+                index += 5
+            else:
+                index -= 5
+        
+            fig, axs = plt.subplots(5)
+            pos = 0
+            for i in range(index*5, (index*5)+5): 
+                self._database[1][i].visualitza(axs[pos])
+                pos += 1 
+                
+    
+class Visualitzador_Agrupacio(Visualitzador):
+    
+    def __init__(self, database):
+        super().__init__(database)
+    
+    def visualitza_basic(self):
+        try: 
+            for i in range(len(self._database[2])):
+                print("Grup ",i)
+                fig, axs = plt.subplots()
+                self._database[1][i][0].visualitza(axs)
         except:
-            print("El fitxer està buit")
-        finally:
-            fitxer.close()
-            print("\nS'ha carregat correctament el database de recuperació!")
-        if self._database[0] == "recuperacio":
-            self._visualitzador_basic = Visualitzador_Basic_Recuperacio()
-            self._visualitzador_dinamic = Visualitzador_Dinamic_Recuperacio()
-        else:
-            self._visualitzador_basic = Visualitzador_Basic_Agrupacio()
-            self._visualitzador_dinamic = Visualitzador_Dinamic_Agrupacio()
+            print("\nERROR: Model erroni!")
+            
+    def visualitza_dinamic(self):
+        try: 
+            opcio = 1
+            print("\nTrieu un grup ' 1 -",len(self._database[1]),"':")
+            try:
+                opcio = int(input("Opció: "))
+                if opcio < 1 and opcio > len(self._database[1]):
+                    raise AssertionError
+                else:
+                    opcio -= 1 
+            except:
+                print("ERROR: Opció NO vàlida. Tria una opció correcta!")
+                opcio = int(input("Opció: "))
+    
+            print("\n -- Visualitzant Grup", opcio, "--")
+            
+            index = 0
+            opcio_2 = 1
+            
+            fig, axs = plt.subplots(5)
+            pos = 0
+            for i in range(index*5, (index*5)+5): 
+                self._database[1][opcio][i].visualitza(axs[pos])
+                pos += 1
+            
+            while opcio_2 in [1,2]:
+                print("𝗘𝘀𝗰𝗼𝗹𝗹𝗶𝘂 𝗾𝘂𝗶𝗻𝗮 𝗼𝗽𝗰𝗶𝗼 𝘃𝗼𝗹𝗲𝘂 𝗿𝗲𝗮𝗹𝗶𝘁𝘇𝗮𝗿:\n\
+        1 - Visualitzar els 5 documents següents.\n\
+        2 - Visualitzar els 5 documents anteriors.\n\
+        Altre núm. - Sortir")
+            
+                try:
+                    opcio_2 = int(input("Opció: "))
+                    if opcio_2 == 2 and index == 0:
+                        raise AssertionError("No hi ha documents anteriors.")
+                except AssertionError as missatge:
+                    print("ERROR: ", missatge, "Tria una opció correcta!")
+                except:
+                    print("ERROR: Opció NO vàlida. Tria una opció correcta!")
+                    opcio_2 = int(input("Opció: "))
+            
+                if opcio_2 == 1:
+                    index += 5
+                else:
+                    index -= 5
+            
+                fig, axs = plt.subplots(5)
+                pos = 0
+                for i in range(index*5, (index*5)+5): 
+                    self._database[1][opcio][i].visualitza(axs[pos])
+                    pos += 1
+        except:
+            print("\nERROR: Model erroni!")
             
     def escull_opcio(self):
         print("\n| 𝙱𝚎𝚗𝚟𝚒𝚗𝚐𝚞𝚝𝚜 𝚊𝚕 𝚅𝚒𝚜𝚞𝚊𝚕𝚒𝚝𝚣𝚊𝚍𝚘𝚛! (𝚟𝚎𝚛𝚜𝚒𝚘 𝟸.𝟸.𝟹) |\n")
         print("𝗘𝘀𝗰𝗼𝗹𝗹𝗶𝘂 𝗾𝘂𝗶𝗻𝗮 𝗼𝗽𝗰𝗶𝗼 𝘃𝗼𝗹𝗲𝘂 𝗿𝗲𝗮𝗹𝗶𝘁𝘇𝗮𝗿:\n\
-    1 - Visualitza 5 documents més pròxims.\n\
-    2 - Entrar al visualitzador dinàmic.\n\
+    1 - Visualitza el document més pròxim al representant de cada grup.\n\
+    2 - Navegar pels els documents d'un grup.\n\
     Altre núm. - Sortir")
         try:
             opcio = int(input("Opció: "))
@@ -47,104 +150,11 @@ class Visualitzador():
             opcio = int(input("Opció: "))
         return opcio
     
-    def visualitzador_basic(self):
-        self._visualitzador_basic.visualitza(self._database)
-        
-    def visualitzador_dinamic(self):
-        self._visualitzador_dinamic.visualitza(self._database)
-        
-
-class Visualitzador_Basic(ABC):
-    
-    @abstractmethod
-    def visualitza(self, database):
-        raise NotImplementedError
-        
-        
-class Visualitzador_Basic_Recuperacio(Visualitzador_Basic):
-    
     def visualitza(self):
-        print("ERROR")
-# =============================================================================
-#         if self._database[0] == "recuperacio":
-#             for recuperacio in self._database[1]:
-#                 
-#             if tipus == "img":
-#             if len(result) == 1:  
-#                 fig, axs = plt.subplots()
-#                 axs.axis('off')
-#                 axs.imshow(image.imread(result[0][0].location))
-#             else:    
-#                 fig, axs = plt.subplots(1, len(result))
-#                 for i in range(len(result)): 
-#                     axs[i].axis('off')
-#                     axs[i].imshow(image.imread(result[i][0].location))
-#         else:
-#             if len(result) == 1: 
-#                 fig, axs = plt.subplots()
-#                 axs.axis('off')
-#                 with open(result[i][0].location, "r") as file:
-#                     txt = file.read()
-#                 axs.text(0, 1, txt, va = 'top', clip_on = True, 
-#                          fontsize = 'xx-small')
-#             else:
-#                 fig, axs = plt.subplots(1, len(result))
-#                 for i in range(len(result)):  
-#                     axs[i].axis('off')
-#                     with open(result[i][0].location, "r") as file:
-#                         txt = file.read()
-#                     axs[i].text(0, 1, txt, va = 'top', clip_on = True, 
-#                                 fontsize = 'xx-small') 
-# =============================================================================
-        
-class Visualitzador_Basic_Agrupacio(Visualitzador_Basic):
-    
-    def visualitza(self, database):
-        print("ERROR")
-        
-class Visualitzador_Dinamic_Recuperacio(Visualitzador_Basic):
-    def __init__(self):
-        self._offset = 0
-    
-    def visualitza(self, database):
-        print("ERROR")
-# =============================================================================
-#         def mostrar_documents (self):
-#             if len(self._distancies) == 0:
-#                 return None
-#             else:
-#                 return self._distancies[self._offset*5:(self._offset*5)+4]
-#     
-#         def avançar_5 (self):
-#             self._offset += 1
-#     
-#         def retornar_5 (self):
-#             if self._offset != 0:
-#                 self._offset -= 1
-#             else:
-#                 raise IndexError
-# =============================================================================
-        
-class Visualitzador_Dinamic_Agrupacio(Visualitzador_Basic):
-    def __init__(self):
-        self._offset = 0
-        
-    def visualitza(self, database):
-        print("ERROR")
-# =============================================================================
-#         def mostrar_documents (self):
-#             if len(self._distancies) == 0:
-#                 return None
-#             else:
-#                 return self._distancies[self._offset*5:(self._offset*5)+4]
-#     
-#         def avançar_5 (self):
-#             self._offset += 1
-#     
-#         def retornar_5 (self):
-#             if self._offset != 0:
-#                 self._offset -= 1
-#             else:
-#                 raise IndexError
-# 
-# =============================================================================
+        opcio = 1
+        while opcio in [1,2]:
+            opcio = self.escull_opcio()
+            if opcio == 1:
+                self.visualitza_basic()
+            elif opcio == 2:
+                self.visualitza_dinamic()

@@ -5,7 +5,7 @@
 #+--------------------------------------------------------------------------+#
 
 from agrupador import Agrupador
-from visualitzador import Visualitzador
+from visualitzador import Visualitzador_Recuperacio, Visualitzador_Agrupacio
 from recuperador import Recuperador
 from representacio import Bow, TfIdf
 from vocabulari import Txt_Vocabulary, Img_Vocabulary, Tfidf_Vocabulary
@@ -106,7 +106,8 @@ class Controller():
         self._recuperador = Recuperador(document_query, self._train)
         self._recuperador.processa_recuperacio()
         resultat = self._recuperador.get_results()
-        self.guardar(nom_database, ["recuperacio", self._t_document, resultat])
+        self.guardar(nom_database, ["recuperacio", resultat])
+        
         
     def realitza_agrupacio(self, nom_database, k):
         self._agrupador = Agrupador(self._train, k)
@@ -117,27 +118,37 @@ class Controller():
             self._agrupador.calcula_representant()
             
         resultat = self._agrupador.get_results()
-        self.guardar(nom_database, ["agrupacio", self._t_document, resultat])
+        self.guardar(nom_database, ["agrupacio", resultat])
+        
         
     def visualitza_resultats(self, nom_database):
-        self._visualitzador = Visualitzador(nom_database)
-        opcio = self._visualitzador.escull_opcio()
-        while opcio == 1 or opcio == 2:
-            if opcio == 1:
-                self._visualitzador.visualitzador_basic()                
-                opcio = self._visualitzador.escull_opcio()
-            else:
-                self._visualitzador.visualitzador_dinamic()
-                opcio = self._visualitzador.escull_opcio()
-        
-        loop = tqdm(total = 5000, position = 0, leave = False)
-        for k in range(5000):
+        database = self.recuperar(nom_database) 
+        if database[0] == "recuperacio": 
+            self._visualitzador = Visualitzador_Recuperacio(database)
+        elif database[0] == "agrupacio": 
+            self._visualitzador = Visualitzador_Agrupacio(database)
+        else:
+            print("El fitxer està dañat!")
+        self._visualitzador.visualitza()        
+        loop = tqdm(total = 4000, position = 0, leave = False)
+        for k in range(4000):
             loop.set_description("Tancant visualitzador...".format(k))
             loop.update(1)
         loop.close()
-        
         print("\n--------------------------------------\n")
-            
+    
+    def recuperar(self, nom_database):
+        fitxer = open(nom_database, 'ab+')
+        fitxer.seek(0)
+        try:
+            database = pickle.load(fitxer)
+        except:
+            print("El fitxer està buit")
+        finally:
+            fitxer.close()
+            print("\nS'ha carregat correctament el database de recuperació!", database)
+        return database
+        
     def guardar(self, fitxer, dades):
         fitxer = open(fitxer, 'wb')
         pickle.dump(dades, fitxer)

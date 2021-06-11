@@ -5,6 +5,7 @@
 #+--------------------------------------------------------------------------+#
 
 from controlador import Controller
+import os
 
 #+--------------------------------------------------------------------------+#
 #   Definim les classes                                                      #
@@ -12,8 +13,9 @@ from controlador import Controller
 
 class Buscador():
     
-    def __init__(self, nom_database):
+    def __init__(self, nom_database = "database.pckl"):
         self._database = nom_database
+        self._controlador = None
         
     def crea_model(self, nom_database, k, document_query):
         self._controlador.prepara_documents()
@@ -92,7 +94,8 @@ class Buscador():
                     if t_model == 1: 
                         t_document = "recuperacio"
                         try:
-                            document_query = input("\nIntrodueix el document Query: \n")
+                            document_query = input("Introdueix el document Query: \n")
+                            if t_document == 
                         except:
                             print("ERROR: Opció NO vàlida. Tria una opció correcta!")
                             document_query = input("\nIntrodueix el document Query: \n")
@@ -116,14 +119,11 @@ class Buscador():
                 return True
                 
         elif opcio == 2:
-            try:
-                buscador.visualitza_resultats(nom_database)
-                return True
-            except AssertionError as missatge:
-                print("\nERROR: ", missatge)
-                return True
-            except AttributeError:
+            if self._controlador == None:
                 self._controlador = Controller(None, None, None, None)
+                self.visualitza_resultats(self._database)
+                return True
+            else:
                 self.visualitza_resultats(self._database)
                 return True
         else:
