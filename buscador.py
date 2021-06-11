@@ -16,6 +16,8 @@ class Buscador():
     def __init__(self, nom_database = "database.pckl"):
         self._database = nom_database
         self._controlador = None
+        self._carpeta_train_img = "./cifrar/retrieval/train"
+        self._carpeta_train_txt = "./newsgroup/retrieval/train"
         
     def crea_model(self, nom_database, k, document_query):
         self._controlador.prepara_documents()
@@ -29,9 +31,6 @@ class Buscador():
         self._controlador.visualitza_resultats(nom_database)
 
     def tria_menu(self, vegada):
-        buscador = None
-        nom_database = "database.pckl"
-        
         if vegada == 0:    
             print(""".______    _______ .__   __. ____    ____  __  .__   __.   _______  __    __  .___________. __
 |   _  \  |   ____||  \ |  | \   \  /   / |  | |  \ |  |  /  _____||  |  |  | |           ||  |
@@ -92,13 +91,21 @@ class Buscador():
                         print("ERROR: Opció NO vàlida. Tria una opció correcta!")
                         t_model = int(input("Model:\n1- Recuperació\n2- Agrupament\n\n"))
                     if t_model == 1: 
-                        t_document = "recuperacio"
+                        t_model = "recuperacio"
                         try:
                             document_query = input("Introdueix el document Query: \n")
-                            if t_document == 
+                            if t_document == "imatge":
+                                if document_query not in os.listdir(self._carpeta_train_img):
+                                    raise AssertionError 
+                            else: 
+                                if document_query not in os.listdir(self._carpeta_train_txt):
+                                    raise AssertionError 
+                        except AssertionError:
+                            print("ERROR: L'arxiu especificat no existeeix a la nostra base de dades. Tria una opció correcta!")
+                            document_query = input("\nIntrodueix el document Query: \n")
                         except:
                             print("ERROR: Opció NO vàlida. Tria una opció correcta!")
-                            document_query = input("\nIntrodueix el document Query: \n")
+                            document_query = input("\nIntrodueix el document Query: ")
                     elif t_model == 2: 
                         t_model = "agrupament"
                         try:
@@ -109,7 +116,6 @@ class Buscador():
                     else: t_model = 0; print("\nOpció NO vàlida!\n")
                 
                 self._controlador = Controller(t_document, t_representacio, t_distancia, train)
-                self._t_model = t_model 
                 self.crea_model(self._database, k, document_query)
                 print("\nFi! \n\n--------------------------------------\n")
                 return True

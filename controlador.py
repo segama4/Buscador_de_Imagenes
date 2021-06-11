@@ -28,46 +28,48 @@ class Controller():
         
         
     def prepara_documents(self):
-        
-        #Proposta Sergio:
-        if self._t_document == "txt":
-            if self._t_representacio == "bow":
-                if self._t_distancia == "cos":
-                    #Calcula distancia cos, representacio bow en texts
-                    for i in os.listdir(self._train):
-                        print("ERRROr")
-
-                else:
-                    print("ERRROr")
-                    #Calcula distancia int, representacio bow en texts
-
-            else:
-                
-                if self._t_distancia == "cos":
-                    #Calcula distancia cos, representacio TfIdf en texts
-                    print("ERRROr")
-
-                
-                else:
-                    print("ERRROr")
-                    #Calcula distancia int, representacio TfIdf en texts
-        else:
-            if self._t_representacio == "bow":
-                if self._t_distancia == "cos":
-                    print("ERRROr")
-                    #Calcula distancia cos, representacio bow en imatges
-                else:
-                    print("ERRROr")
-                    #Calcula distancia int, representacio bow en imatges
-            else:
-                if self._t_distancia == "cos":
-                    print("ERRROr")
-                    #Calcula distancia cos, representacio TfIdf en imatges
-                else:
-                    print("ERRROr")
-                    #Calcula distancia int, representacio TfIdf en imatges
-
-        
+# =============================================================================
+#         
+#         #Proposta Sergio:
+#         if self._t_document == "txt":
+#             if self._t_representacio == "bow":
+#                 if self._t_distancia == "cos":
+#                     #Calcula distancia cos, representacio bow en texts
+#                     for i in os.listdir(self._train):
+#                         print("ERRROr")
+# 
+#                 else:
+#                     print("ERRROr")
+#                     #Calcula distancia int, representacio bow en texts
+# 
+#             else:
+#                 
+#                 if self._t_distancia == "cos":
+#                     #Calcula distancia cos, representacio TfIdf en texts
+#                     print("ERRROr")
+# 
+#                 
+#                 else:
+#                     print("ERRROr")
+#                     #Calcula distancia int, representacio TfIdf en texts
+#         else:
+#             if self._t_representacio == "bow":
+#                 if self._t_distancia == "cos":
+#                     print("ERRROr")
+#                     #Calcula distancia cos, representacio bow en imatges
+#                 else:
+#                     print("ERRROr")
+#                     #Calcula distancia int, representacio bow en imatges
+#             else:
+#                 if self._t_distancia == "cos":
+#                     print("ERRROr")
+#                     #Calcula distancia cos, representacio TfIdf en imatges
+#                 else:
+#                     print("ERRROr")
+#                     #Calcula distancia int, representacio TfIdf en imatges
+# 
+#         
+# =============================================================================
         # Proposta Sergi:
         train = []    
         if self._t_document == "text":

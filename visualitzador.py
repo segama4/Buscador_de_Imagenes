@@ -38,7 +38,7 @@ class Visualitzador_Recuperacio(Visualitzador):
         fig, axs = plt.subplots(5)
         pos = 0
         for i in range(index*5, (index*5)+5):
-            self._database[1][i].visualitza(axs[i])
+            self._database[1][i].visualitza(axs[pos])
             pos += 1
         
         while opcio_2 in [1,2]:
@@ -53,6 +53,7 @@ class Visualitzador_Recuperacio(Visualitzador):
                     raise AssertionError("No hi ha documents anteriors.")
             except AssertionError as missatge:
                 print("ERROR: ", missatge, "Tria una opció correcta!")
+                opcio_2 = int(input("Opció: "))
             except:
                 print("ERROR: Opció NO vàlida. Tria una opció correcta!")
                 opcio_2 = int(input("Opció: "))
