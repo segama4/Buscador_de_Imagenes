@@ -28,49 +28,6 @@ class Controller():
         
         
     def prepara_documents(self):
-# =============================================================================
-#         
-#         #Proposta Sergio:
-#         if self._t_document == "txt":
-#             if self._t_representacio == "bow":
-#                 if self._t_distancia == "cos":
-#                     #Calcula distancia cos, representacio bow en texts
-#                     for i in os.listdir(self._train):
-#                         print("ERRROr")
-# 
-#                 else:
-#                     print("ERRROr")
-#                     #Calcula distancia int, representacio bow en texts
-# 
-#             else:
-#                 
-#                 if self._t_distancia == "cos":
-#                     #Calcula distancia cos, representacio TfIdf en texts
-#                     print("ERRROr")
-# 
-#                 
-#                 else:
-#                     print("ERRROr")
-#                     #Calcula distancia int, representacio TfIdf en texts
-#         else:
-#             if self._t_representacio == "bow":
-#                 if self._t_distancia == "cos":
-#                     print("ERRROr")
-#                     #Calcula distancia cos, representacio bow en imatges
-#                 else:
-#                     print("ERRROr")
-#                     #Calcula distancia int, representacio bow en imatges
-#             else:
-#                 if self._t_distancia == "cos":
-#                     print("ERRROr")
-#                     #Calcula distancia cos, representacio TfIdf en imatges
-#                 else:
-#                     print("ERRROr")
-#                     #Calcula distancia int, representacio TfIdf en imatges
-# 
-#         
-# =============================================================================
-        # Proposta Sergi:
         train = []    
         if self._t_document == "text":
             vocabulary = Txt_Vocabulary()
@@ -99,7 +56,6 @@ class Controller():
                 train.append(Document(file, train+"/"+file, vocabulary, representador))
                 train[len(train)-1].read()
                 train[len(train)-1].get_representation()
-        
         self._train = train
         
         
@@ -139,6 +95,7 @@ class Controller():
         loop.close()
         print("\n--------------------------------------\n")
     
+    
     def recuperar(self, nom_database):
         fitxer = open(nom_database, 'ab+')
         fitxer.seek(0)
@@ -151,6 +108,7 @@ class Controller():
             print("\nS'ha carregat correctament el database de recuperació!", database)
         return database
         
+    
     def guardar(self, fitxer, dades):
         fitxer = open(fitxer, 'wb')
         pickle.dump(dades, fitxer)
