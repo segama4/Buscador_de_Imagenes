@@ -34,6 +34,12 @@ class Recuperador ():
                 fitx.get_representation()
                 if fitxer != self._document:
                     self._distancies.append(self._operador.calcula_distancia(self._document, fitx))
+        else:
+            for fitxer in os.listdir(self._train):
+                fitx = classes_arxius.Document(fitxer, self._train+"/"+fitxer, self._document.vocabulary, "")
+                fitx.get_representation()
+                if fitxer != self._document:
+                    self._distancies.append(self._operador.calcula_distancia(self._document, fitx))
 
         self._distancies.sort()
     
