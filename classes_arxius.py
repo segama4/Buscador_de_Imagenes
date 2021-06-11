@@ -65,6 +65,9 @@ class Arxiu(ABC):
     @abstractmethod        
     def visualitza(self, training_file):
         raise NotImplementedError()
+    @abstractmethod        
+    def tipus(self):
+        raise NotImplementedError()
     
     
 class Imatge(Arxiu):
@@ -81,7 +84,7 @@ class Imatge(Arxiu):
             sift = cv2.SIFT_create()
             keypoints = sift.detect(img)
             if keypoints != []:
-                bow = bow_extractor.compute(img, keypoints)
+                bow = bow_extractor.vocabulary.compute(img, keypoints)
             else:
                 bow = np.zeros((1, bow_extractor.descriptorSize()))
             return bow
@@ -107,6 +110,8 @@ class Imatge(Arxiu):
                 if lletra == "_":
                     guio += 1
             self._label = re.sub("[^a-zA-Z0-9]", " ", etiqueta)
+    def tipus(self):
+        return "Imatge"
 
 
 class Document(Arxiu):
@@ -146,3 +151,6 @@ class Document(Arxiu):
                 if lletra == "_":
                     guio += 1
             etiqueta = re.sub("[^a-zA-Z0-9]", " ", etiqueta)
+    
+    def tipus(self):
+        return "Document"

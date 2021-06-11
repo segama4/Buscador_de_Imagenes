@@ -35,6 +35,8 @@ class Cosinus(Distancia):
             return 1 - (dist / den)
         else:
             return 1
+    def calcula_representacio(self, arxiu):
+        return
         
         
         
