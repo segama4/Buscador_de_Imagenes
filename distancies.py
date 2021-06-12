@@ -43,7 +43,7 @@ class Intersection(Distancia):
 class Cosinus(Distancia):
     def __init__(self, train, document):
         self._indexador = Index(train, document)
-        self._indexador.crea_index()
+        #self._indexador.crea_index()
         
         
         
