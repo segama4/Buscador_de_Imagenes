@@ -35,7 +35,7 @@ class Controller():
                 representador = Bow(self._t_document, vocabulary.vocabulary)
             else:
                 vocabulary_tfidf = Tfidf_Vocabulary(self._t_document, vocabulary.vocabulary) 
-                vocabulary_tfidf.read("./newsgroups/vocabulary_idf.txt")
+                vocabulary_tfidf.read("text", "./newsgroups/vocabulary_idf.txt")
                 representador = TfIdf(vocabulary.vocabulary, vocabulary_tfidf)
             self._index = Index(self._t_document, vocabulary.vocabulary)
             train = []   
@@ -56,7 +56,7 @@ class Controller():
                 representador = Bow(self._t_document, vocabulary.vocabulary)
             else:
                 vocabulary_tfidf = Tfidf_Vocabulary() 
-                vocabulary_tfidf.read("./cifrar/vocabulary/idf.txt")
+                vocabulary_tfidf.read("imatge", "./cifrar/vocabulary/idf.txt")
                 representador = TfIdf(vocabulary.vocabulary, vocabulary_tfidf)
             self._index = Index(self._t_document, vocabulary.vocabulary)
             train = []   

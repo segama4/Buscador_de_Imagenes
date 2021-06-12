@@ -65,12 +65,14 @@ class TfIdf(Representacio):
     def __init__(self, tipus, vocabulary):
         super().__init__(tipus, vocabulary)
     
-    def calcula_representacio(self, arxiu):
+
         
         
+
+    def calcula_representacio(self, file):
         if self._tipus == "text":
             representation = []
-            counter = collections.Counter(np.array(re.sub("[^a-zA-Z0-9]", " ", arxiu.lower()).split()))
+            counter = collections.Counter(np.array(re.sub("[^a-zA-Z0-9]", " ", file.lower()).split()))
             cont = 0
             for i in self._vocabulary:
                 representation.append((counter[cont]/len(counter))*i)
@@ -79,7 +81,7 @@ class TfIdf(Representacio):
 
         else:
             representation = []
-            img_gray = cv2.cvtColor(arxiu, cv2.COLOR_BGR2GRAY)
+            img_gray = cv2.cvtColor(file, cv2.COLOR_BGR2GRAY)
             representacio = compute_bow_images(img_gray, self._vocabulary)
             cont = 0
             for i in self._vocabulary:
