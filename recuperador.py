@@ -50,8 +50,8 @@ class Recuperador ():
 
 
 
-
-train = "cifrar/clustering"
+#Test
+"""train = "cifrar/clustering"
 vocabulary = vocabulari.Img_Vocabulary()
 vocabulary.read("cifrar/vocabulary/vocabulary.dat")
 document = classes_arxius.Imatge("image_1_class_airplane.jpg", "cifrar/clustering/image_1_class_airplane.jpg",vocabulary, "")
@@ -60,7 +60,7 @@ t_dis = "cosinus"
 
 recuperador = Recuperador(document, train, t_dis)
 recuperador.processa_recuperacio()
-print(str(recuperador.get_results()))
+print(str(recuperador.get_results()))"""
 
 
 
