@@ -53,6 +53,7 @@ class Img_Vocabulary(Vocabulary):
 class Tfidf_Vocabulary(Vocabulary):
     def __init__(self, vocabulary_normal):
        super().__init__(vocabulary = np.array([]))
+       self.vocabulary_normal = vocabulary_normal
 
     def read(self, tipus, vocabulary_file):
         if tipus == "text": 
@@ -62,4 +63,4 @@ class Tfidf_Vocabulary(Vocabulary):
         else:
             with open(vocabulary_file, "r") as vocabulary_file:
                 for paraula in vocabulary_file:
-                    self._vocabulary = np.append(float(self._vocabulary, paraula[:-1]))
+                    self._vocabulary = np.append(self._vocabulary,float(paraula[:-1]))

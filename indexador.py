@@ -9,12 +9,15 @@
 #   Definim les classes                                                      #
 #+--------------------------------------------------------------------------+#
 
+from pickle import NONE
+
+
 class Index():
     
     def __init__(self, tipus, vocabulary):
         self._tipus = tipus
         self._index = {}
-        self._mida = int(vocabulary.descriptorSize()) if tipus == 'imatge' else len(vocabulary)
+        self._mida = int(vocabulary.vocabulary.descriptorSize()) if tipus == 'imatge' else len(vocabulary)
         for i in range(self._mida):
             self._index[i]=[]
         self._representacions = "si"
@@ -26,6 +29,7 @@ class Index():
                 self._index[i].append(document)
 
     def recuperar_documents_on_buscar(self, nom_document):
+        document = None
         for i in self._index.keys():
             for j in self._index[i]:
                 if j.file_name == nom_document:

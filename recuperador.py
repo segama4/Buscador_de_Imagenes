@@ -5,6 +5,10 @@
 #+--------------------------------------------------------------------------+#
 
 from distancies import Cosinus, Intersection
+import vocabulari
+import classes_arxius
+import representacio
+from indexador import Index
 
 #+--------------------------------------------------------------------------+#
 #   Definim les classes                                                      #
@@ -36,16 +40,23 @@ class Recuperador ():
 
 
 #Test
-"""train = "cifrar/clustering"
-vocabulary = vocabulari.Img_Vocabulary()
-vocabulary.read("cifrar/vocabulary/vocabulary.dat")
-document = classes_arxius.Imatge("image_1_class_airplane.jpg", "cifrar/clustering/image_1_class_airplane.jpg",vocabulary, "")
+train = "cifrar/clustering"
+vocabulary1 = vocabulari.Img_Vocabulary()
+vocabulary1.read("cifrar/vocabulary/vocabulary.dat")
+#vocabulary = vocabulari.Tfidf_Vocabulary(vocabulary1)
+#vocabulary.read("im","cifrar/vocabulary/idf.txt")
+representdor = representacio.Bow("tfidf", vocabulary1)
+document = classes_arxius.Imatge("image_1_class_airplane.jpg", "cifrar/clustering/image_1_class_airplane.jpg",vocabulary1, representdor)
+document.read()
 document.get_representation()
 t_dis = "cosinus"
+index = Index("imatge", vocabulary1)
 
-recuperador = Recuperador(document, train, t_dis)
+recuperador = Recuperador(document, index, t_dis)
+
 recuperador.processa_recuperacio()
-print(str(recuperador.get_results()))"""
+print(str(recuperador.get_results()))
+
 
 
 

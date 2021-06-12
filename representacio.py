@@ -56,7 +56,7 @@ class Bow(Representacio):
     
         else: 
             img_gray = cv2.cvtColor(file, cv2.COLOR_BGR2GRAY)
-            representacio = compute_bow_images(img_gray, self._vocabulary)
+            representacio = compute_bow_images(img_gray, self._vocabulary.vocabulary)
             return representacio[0]
     
 
@@ -82,7 +82,7 @@ class TfIdf(Representacio):
         else:
             representation = []
             img_gray = cv2.cvtColor(file, cv2.COLOR_BGR2GRAY)
-            representacio = compute_bow_images(img_gray, self._vocabulary)
+            representacio = compute_bow_images(img_gray, self._vocabulary.vocabulary_normal)
             cont = 0
             for i in self._vocabulary:
                 representation.append((representacio[cont]/len(representacio))*i)
