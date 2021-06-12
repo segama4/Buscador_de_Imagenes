@@ -6,6 +6,7 @@
 
 from distancies import Cosinus, Intersection
 import classes_arxius
+import vocabulari
 import os
 
 #+--------------------------------------------------------------------------+#
@@ -50,7 +51,7 @@ class Recuperador ():
 
 
 train = "cifrar/clustering"
-vocabulary = Img_Vocabulary()
+vocabulary = vocabulari.Img_Vocabulary()
 vocabulary.read("cifrar/vocabulary/vocabulary.dat")
 document = classes_arxius.Imatge("image_1_class_airplane.jpg", "cifrar/clustering/image_1_class_airplane.jpg",vocabulary, "")
 document.get_representation()

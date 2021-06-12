@@ -6,8 +6,6 @@
 
 import re
 from abc import ABC, abstractmethod
-import numpy as np
-import collections
 import cv2
 import matplotlib.image as image
 
@@ -65,9 +63,6 @@ class Arxiu(ABC):
     @abstractmethod        
     def visualitza(self, training_file):
         raise NotImplementedError()
-    @abstractmethod        
-    def tipus(self):
-        raise NotImplementedError()
     
     
 class Imatge(Arxiu):
@@ -77,21 +72,11 @@ class Imatge(Arxiu):
         
     def read(self):
         self._file = image.imread(self._location)
+        self._file_representacio = cv2.imread(self._location)
             
     def get_representation(self):
-
-        def compute_bow_images(img, bow_extractor):
-            sift = cv2.SIFT_create()
-            keypoints = sift.detect(img)
-            if keypoints != []:
-                bow = bow_extractor.vocabulary.compute(img, keypoints)
-            else:
-                bow = np.zeros((1, bow_extractor.descriptorSize()))
-            return bow
+        self._representacio = self._representador.calcula_representacio(self._file_representacio)
         
-        img = cv2.imread(self._location)
-        img_gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-        self._representation = compute_bow_images(img_gray, self._vocabulary)
 
     def visualitza(self, axs):
             axs.axis('off')
@@ -110,8 +95,6 @@ class Imatge(Arxiu):
                 if lletra == "_":
                     guio += 1
             self._label = re.sub("[^a-zA-Z0-9]", " ", etiqueta)
-    def tipus(self):
-        return "Imatge"
 
 
 class Document(Arxiu):
@@ -124,15 +107,7 @@ class Document(Arxiu):
             self._file = file.read()
        
     def get_representation(self):
-        counter = collections.Counter(np.array(re.sub("[^a-zA-Z0-9]", " ", 
-                                            self._file.lower()).split()))
-        representation = []
-        for word in self._vocabulary:
-            if word not in counter.keys(): 
-                representation.append(0)
-            else:
-                representation.append(counter[word])
-        self._representation = np.array(representation)
+        self._representacio = self._representador.calcula_representacio(self._file)
         
     def visualitza(self, axs):
         axs.axis('off')
@@ -151,6 +126,3 @@ class Document(Arxiu):
                 if lletra == "_":
                     guio += 1
             etiqueta = re.sub("[^a-zA-Z0-9]", " ", etiqueta)
-    
-    def tipus(self):
-        return "Document"
