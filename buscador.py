@@ -102,7 +102,7 @@ class Buscador():
                         t_model = "recuperacio"
                         try:
                             document_query = input("Introdueix el document Query: \n")
-                            if t_document == "imatge":-
+                            if t_document == "imatge":
                                 if document_query not in os.listdir(self._carpeta_train_img):
                                     raise AssertionError 
                             else: 

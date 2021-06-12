@@ -33,9 +33,9 @@ class Controller():
             vocabulary = Txt_Vocabulary()
             vocabulary.read("./newsgroup/retrieval/train/vocabulary.txt")
             if self._t_representacio == "bow":
-                representador = Bow(vocabulary)
+                representador = Bow(self._t_document, vocabulary)
             else:
-                vocabulary_tfidf = Tfidf_Vocabulary() 
+                vocabulary_tfidf = Tfidf_Vocabulary(self._t_document, vocabulary) 
                 vocabulary_tfidf.read("./newsgroup/vocabulary_idf.txt")
                 representador = TfIdf(vocabulary, vocabulary_tfidf)
             file_list = os.listdir(self._train)
@@ -48,7 +48,7 @@ class Controller():
             vocabulary = Img_Vocabulary()
             vocabulary.read("./cifrar/retrieval/train/vocabulary.dat")
             if self._t_representacio == "bow":
-                representador = Bow(vocabulary)
+                representador = Bow(self._t_document, vocabulary)
             else:
                 vocabulary_tfidf = Tfidf_Vocabulary() 
                 vocabulary_tfidf.read("./cifrar/vocabulary/idf.txt")
