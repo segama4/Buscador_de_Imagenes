@@ -25,56 +25,59 @@ class Controller():
         self._t_document = t_document
         self._t_representacio = t_representacio
         self._t_distancia = t_distancia
-        self._train = train
+        self._train_ = train
             
     def prepara_index(self):
-        train = []              
         if self._t_document == "text":
             vocabulary = Txt_Vocabulary()
             vocabulary.read("./newsgroup/retrieval/train/vocabulary.txt")
             if self._t_representacio == "bow":
-                representador = Bow(self._t_document, vocabulary)
+                representador = Bow(self._t_document, vocabulary.vocabulary)
             else:
                 vocabulary_tfidf = Tfidf_Vocabulary(self._t_document, vocabulary) 
                 vocabulary_tfidf.read("./newsgroup/vocabulary_idf.txt")
-                representador = TfIdf(vocabulary, vocabulary_tfidf)
-            file_list = os.listdir(self._train)
+                representador = TfIdf(vocabulary.vocabulary, vocabulary_tfidf)
+            train = []   
+            file_list = os.listdir(self._train_)
             for file in file_list: 
-                train.append(Document(file, train+"/"+file, vocabulary, representador))
+                train.append(Document(file, self._train_+"/"+file, vocabulary, representador))
                 train[len(train)-1].read()
                 train[len(train)-1].get_representation()
         
         else:
             vocabulary = Img_Vocabulary()
-            vocabulary.read("./cifrar/retrieval/train/vocabulary.dat")
+            vocabulary.read("./cifrar/retrieval/vocabulary.dat")
             if self._t_representacio == "bow":
-                representador = Bow(self._t_document, vocabulary)
+                representador = Bow(self._t_document, vocabulary.vocabulary)
             else:
                 vocabulary_tfidf = Tfidf_Vocabulary() 
                 vocabulary_tfidf.read("./cifrar/vocabulary/idf.txt")
-                representador = TfIdf(vocabulary, vocabulary_tfidf)
-            file_list = os.listdir(self._train)
+                representador = TfIdf(vocabulary.vocabulary, vocabulary_tfidf)
+            train = []   
+            file_list = os.listdir(self._train_)
             for file in file_list: 
-                train.append(Imatge(file, train+"/"+file, vocabulary, representador))
+                train.append(Imatge(file, self._train_+"/"+file, vocabulary, representador))
                 train[len(train)-1].read()
                 train[len(train)-1].get_representation()
         self._train = train
-        self.crea_index(self._train, vocabulary)
+        self.crea_index(self._train, vocabulary.vocabulary)
         
-    def crea_index(self, train):
-        indexador = Index(train)
+    def crea_index(self, train, vocabulary):
+        indexador = Index(train, vocabulary)
         index = indexador.crea_index()
         self.guardar("index.pckl", index)
         
     def realitza_recuperacio(self, nom_database, document_query):
         try: 
-            index = self.recupera("index.pckl")
-            self._recuperador = Recuperador(document_query, index)
+            index = self.recuperar("index.pckl")
+            self._recuperador = Recuperador(document_query, index, self._t_distancia)
             self._recuperador.processa_recuperacio()
             resultat = self._recuperador.get_results()
             self.guardar(nom_database, ["recuperacio", resultat])
-        except AssertionError as missatge:
-            print("ERROR: ", missatge)
+        except:
+            print("\nERROR: No hi ha cap index creat!")
+        
+  
         
     def realitza_agrupacio(self, nom_database, k):
         self._agrupador = Agrupador(self._train, k)
@@ -109,16 +112,12 @@ class Controller():
         try: 
             fitxer = open(nom_database, 'ab+')
             fitxer.seek(0)
-            try:
-                database = pickle.load(fitxer)
-            except:
-                print("El fitxer està buit")
-            finally:
-                fitxer.close()
-                print("\nS'ha carregat correctament el database de recuperació!", database)
+            database = pickle.load(fitxer)
+            fitxer.close()
+            print("\nS'ha carregat correctament el database de recuperació!", database)
             return database
         except:
-            raise AssertionError("El fitxer no existeix!")
+            raise AssertionError("\nEl fitxer que necessites no existeix!")
             
     
     def guardar(self, fitxer, dades):

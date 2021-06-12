@@ -15,15 +15,20 @@ import re
 #+--------------------------------------------------------------------------+#
 
 class Representacio(ABC):
-    @abstractmethod
-    def calcula_representacio(self, arxiu):
-        raise NotImplementedError
-        
-class Bow(Representacio):
     
     def __init__(self, tipus, vocabulary):
         self._tipus = tipus
         self._vocabulary = vocabulary
+        
+    @abstractmethod
+    def calcula_representacio(self, arxiu):
+        raise NotImplementedError
+        
+        
+class Bow(Representacio):
+    
+    def __init__(self, tipus, vocabulary):
+        super().__init__(tipus, vocabulary)
         
     def calcula_representacio(self, file):
         def compute_bow_images(img, bow_extractor):
@@ -52,5 +57,9 @@ class Bow(Representacio):
     
 
 class TfIdf(Representacio):
-     def calcula_representacio(self, arxiu):
+    
+    def __init__(self, tipus, vocabulary):
+        super().__init__(tipus, vocabulary)
+    
+    def calcula_representacio(self, arxiu):
         print("ERROR")

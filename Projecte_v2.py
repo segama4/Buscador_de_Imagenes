@@ -39,20 +39,3 @@ def retrieval(nom_database):
 # =============================================================================
 
 retrieval("database.pckl")
-
-
-
-
-# =============================================================================
-# import os
-# import re
-# from abc import ABC, abstractmethod
-# import numpy as np
-# import collections
-# import time
-# import cv2
-# import pickle
-# import matplotlib.image as image
-# import matplotlib.pyplot as plt
-# from buscador import Buscador
-# =============================================================================
