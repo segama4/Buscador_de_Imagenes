@@ -37,12 +37,14 @@ class Controller():
                 vocabulary_tfidf = Tfidf_Vocabulary(self._t_document, vocabulary) 
                 vocabulary_tfidf.read("./newsgroup/vocabulary_idf.txt")
                 representador = TfIdf(vocabulary.vocabulary, vocabulary_tfidf)
+            self._index = Index(self._t_document, vocabulary.vocabulary)
             train = []   
             file_list = os.listdir(self._train_)
             for file in file_list: 
                 train.append(Document(file, self._train_+"/"+file, vocabulary, representador))
                 train[len(train)-1].read()
                 train[len(train)-1].get_representation()
+                self._index.afegeix_document(train[len(train)-1])
         
         else:
             vocabulary = Img_Vocabulary()
@@ -53,19 +55,17 @@ class Controller():
                 vocabulary_tfidf = Tfidf_Vocabulary() 
                 vocabulary_tfidf.read("./cifrar/vocabulary/idf.txt")
                 representador = TfIdf(vocabulary.vocabulary, vocabulary_tfidf)
+            self._index = Index(self._t_document, vocabulary.vocabulary)
             train = []   
             file_list = os.listdir(self._train_)
             for file in file_list: 
                 train.append(Imatge(file, self._train_+"/"+file, vocabulary, representador))
                 train[len(train)-1].read()
                 train[len(train)-1].get_representation()
+                self._index.afegeix_document(train[len(train)-1])
         self._train = train
-        self.crea_index(self._train, vocabulary.vocabulary)
+        self.guardar("index.pckl", self._index)
         
-    def crea_index(self, train, vocabulary):
-        indexador = Index(train, vocabulary)
-        index = indexador.crea_index()
-        self.guardar("index.pckl", index)
         
     def realitza_recuperacio(self, nom_database, document_query):
         try: 

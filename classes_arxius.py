@@ -75,7 +75,7 @@ class Imatge(Arxiu):
         self._file_representacio = cv2.imread(self._location)
             
     def get_representation(self):
-        self._representacio = self._representador.calcula_representacio(self._file_representacio)
+        self._representation = self._representador.calcula_representacio(self._file_representacio)
         
 
     def visualitza(self, axs):

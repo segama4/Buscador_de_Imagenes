@@ -5,10 +5,6 @@
 #+--------------------------------------------------------------------------+#
 
 from distancies import Cosinus, Intersection
-import classes_arxius
-import vocabulari
-import os
-from vocabulari import Img_Vocabulary
 
 #+--------------------------------------------------------------------------+#
 #   Definim les classes                                                      #
@@ -18,10 +14,9 @@ from vocabulari import Img_Vocabulary
 class Recuperador ():
     def __init__(self, document, index, t_distancia):
         self._index = index
-        self._document = [document for document in [conjunt in  if document.file_name == doc][0]
+        self._document = [document for document in [conjunt for conjunt in index if document.file_name == conjunt]]
         self._distancies = []
         self._self._arxius_analitzar = []
-        self._
         
         
         if t_distancia == "cosinus": 
@@ -30,7 +25,7 @@ class Recuperador ():
             self._operador = Intersection(self._train, self._document)
 
     def processa_recuperacio(self):
-        for fitxer in self._arxius_analitzar:
+        for fitxer in self._index.recuperar_documents_on_buscar(self._document):
             if fitxer.file_name != self._document.file_name:
                 self._distancies.append((fitxer, self._operador.calcula_distancia(self._document, fitxer)))
         self._distancies = sorted(self._distancies, key=lambda x: x[1])
