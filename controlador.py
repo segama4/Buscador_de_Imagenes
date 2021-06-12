@@ -34,7 +34,7 @@ class Controller():
             if self._t_representacio == "bow":
                 representador = Bow(self._t_document, vocabulary.vocabulary)
             else:
-                vocabulary_tfidf = Tfidf_Vocabulary(self._t_document, vocabulary) 
+                vocabulary_tfidf = Tfidf_Vocabulary(self._t_document, vocabulary.vocabulary) 
                 vocabulary_tfidf.read("./newsgroups/vocabulary_idf.txt")
                 representador = TfIdf(vocabulary.vocabulary, vocabulary_tfidf)
             self._index = Index(self._t_document, vocabulary.vocabulary)
@@ -107,8 +107,8 @@ class Controller():
         else:
             print("El fitxer està dañat!")
         self._visualitzador.visualitza()        
-        loop = tqdm(total = 4000, position = 0, leave = False)
-        for k in range(4000):
+        loop = tqdm(total = 3000, position = 0, leave = False)
+        for k in range(3000):
             loop.set_description("Tancant visualitzador...".format(k))
             loop.update(1)
         loop.close()

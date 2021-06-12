@@ -43,17 +43,17 @@ class Visualitzador_Recuperacio(Visualitzador):
     2 - Visualitzar els 5 documents anteriors.\n\
     Altre núm. - Sortir")
         
-            try:
-                opcio_2 = int(input("Opció: "))
-                if opcio_2 == 2 and index == 0:
-                    raise AssertionError("No hi ha documents anteriors.")
-            except AssertionError as missatge:
-                print("ERROR: ", missatge, "Tria una opció correcta!")
+            try: 
                 opcio_2 = int(input("Opció: "))
             except:
                 print("ERROR: Opció NO vàlida. Tria una opció correcta!")
                 opcio_2 = int(input("Opció: "))
-        
+            
+            if opcio_2 == 2 and index == 0:
+                    while opcio_2 == 2: 
+                        print("ERROR: No hi ha documents anteriors. Tria una opció correcta!")
+                        opcio_2 = int(input("Opció: "))
+            
             if opcio_2 == 1:
                 index += 5
             else:
@@ -91,7 +91,7 @@ class Visualitzador_Agrupacio(Visualitzador):
                 else:
                     opcio -= 1 
             except:
-                print("ERROR: Opció NO vàlida. Tria una opció correcta!")
+                print("\nERROR: Opció NO vàlida. Tria una opció correcta!")
                 opcio = int(input("Opció: "))
     
             print("\n -- Visualitzant Grup", opcio, "--")
@@ -111,20 +111,21 @@ class Visualitzador_Agrupacio(Visualitzador):
         2 - Visualitzar els 5 documents anteriors.\n\
         Altre núm. - Sortir")
             
-                try:
-                    opcio_2 = int(input("Opció: "))
-                    if opcio_2 == 2 and index == 0:
-                        raise AssertionError("No hi ha documents anteriors.")
-                except AssertionError as missatge:
-                    print("ERROR: ", missatge, "Tria una opció correcta!")
-                except:
-                    print("ERROR: Opció NO vàlida. Tria una opció correcta!")
-                    opcio_2 = int(input("Opció: "))
+            try: 
+                opcio_2 = int(input("Opció: "))
+            except:
+                print("ERROR: Opció NO vàlida. Tria una opció correcta!")
+                opcio_2 = int(input("Opció: "))
             
-                if opcio_2 == 1:
-                    index += 5
-                else:
-                    index -= 5
+            if opcio_2 == 2 and index == 0:
+                    while opcio_2 == 2: 
+                        print("\nERROR: No hi ha documents anteriors. Tria una opció correcta!")
+                        opcio_2 = int(input("Opció: "))
+            
+            if opcio_2 == 1:
+                index += 5
+            else:
+                index -= 5
             
                 fig, axs = plt.subplots(5)
                 pos = 0
