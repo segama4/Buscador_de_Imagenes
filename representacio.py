@@ -16,6 +16,15 @@ from math import log10
 #   Definim les classes                                                      #
 #+--------------------------------------------------------------------------+#
 
+def compute_bow_images(img, bow_extractor):
+            sift = cv2.SIFT_create()
+            keypoints = sift.detect(img)
+            if keypoints != []:
+                bow = bow_extractor.compute(img, keypoints)
+            else:
+                bow = np.zeros((1, bow_extractor.descriptorSize()))
+            return bow
+
 class Representacio(ABC):
     def __init__(self, tipus, vocabulary):
         self._tipus = tipus
@@ -32,15 +41,9 @@ class Bow(Representacio):
         super().__init__(tipus, vocabulary)
         
     def calcula_representacio(self, file):
-        def compute_bow_images(img, bow_extractor):
-            sift = cv2.SIFT_create()
-            keypoints = sift.detect(img)
-            if keypoints != []:
-                bow = bow_extractor.compute(img, keypoints)
-            else:
-                bow = np.zeros((1, bow_extractor.descriptorSize()))
-            return bow
         
+        
+
         if self._tipus == "text": 
             counter = collections.Counter(np.array(re.sub("[^a-zA-Z0-9]", " ", file.lower()).split()))
             representation = []
@@ -62,34 +65,30 @@ class TfIdf(Representacio):
     def __init__(self, tipus, vocabulary):
         super().__init__(tipus, vocabulary)
     
-    def calcula_representacio(self, arxiu, index):
+    def calcula_representacio(self, arxiu):
+        
+        
         if self._tipus == "text":
             representation = []
-            locf = index.train
-            n_arxius = len(os.listdir(locf))
             counter = collections.Counter(np.array(re.sub("[^a-zA-Z0-9]", " ", arxiu.lower()).split()))
-            df = 0
+            cont = 0
             for i in self._vocabulary:
-                if i not in counter.keys(): 
-                    tf = 0
-                else:
-                    tf =counter[i] / len(counter)
-                df = len (index[i])
-                representation.append(tf * log10(n_arxius/df))
-
+                representation.append((counter[cont]/len(counter))*i)
+                cont += 1
             return np.array(representation)
+
         else:
-            representation_tf = []
-            locf = index.train
-            n_arxius = len(os.listdir(locf))
+            representation = []
             img_gray = cv2.cvtColor(arxiu, cv2.COLOR_BGR2GRAY)
             representacio = compute_bow_images(img_gray, self._vocabulary)
-            for i in representacio:
-                tf = i / representacio.size
-                idf = log10 (n_arxius/(len(index[i]))) #Pendiente de cambio
-                representation_tf.append(tf*idf)
+            cont = 0
+            for i in self._vocabulary:
+                representation.append((representacio[cont]/len(representacio))*i)
+                cont += 1
+                
+            
 
-            return np.array (representation_tf)
+            return np.array (representation)
 
 
                 
