@@ -62,7 +62,7 @@ class TfIdf(Representacio):
     def __init__(self, tipus, vocabulary):
         super().__init__(tipus, vocabulary)
     
-    def calcula_representacio(self, arxiu, index):
+    def calcula_representacio(self, file):
         if self._tipus == "text":
             representation = []
             locf = index.train

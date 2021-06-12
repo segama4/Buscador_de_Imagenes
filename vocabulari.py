@@ -51,10 +51,15 @@ class Img_Vocabulary(Vocabulary):
         self._vocabulary = bow_extractor
         
 class Tfidf_Vocabulary(Vocabulary):
-    def __init__(self):
-        super().__init__(vocabulary = [])
+    def __init__(self, vocabulary_normal):
+       super().__init__(vocabulary = np.array([]))
 
-    def read(self, vocabulary_file):
-        with open(vocabulary_file, "r") as vocabulary_file:
-            for paraula in vocabulary_file:
-                self._vocabulary.append(self._vocabulary, paraula[:-1])
+    def read(self, tipus, vocabulary_file):
+        if tipus == "text": 
+            with open(vocabulary_file, "r") as vocabulary_file:
+                for paraula in vocabulary_file.readline():
+                    self._vocabulary.append(float(paraula.split()[1]))
+        else:
+            with open(vocabulary_file, "r") as vocabulary_file:
+                for paraula in vocabulary_file:
+                    self._vocabulary = np.append(float(self._vocabulary, paraula[:-1]))
