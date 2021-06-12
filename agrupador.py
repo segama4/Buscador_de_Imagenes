@@ -46,8 +46,8 @@ class Agrupador():
             mitjana = mitjana/len(self._results[group][1])
             llista_distancies = []
             for arxiu in self._results[group][1]:
-                llista_distancies.append(arxiu, self._operador.calcula_distancia(arxiu, mitjana, True))
-            new = sorted(llista_distancies, key=lambda x: x[0])[0][0]
+                llista_distancies.append((arxiu, self._operador.calcula_distancia(arxiu, mitjana, True)))
+            new = sorted(llista_distancies, key=lambda x: x[1])[0][0]
             if self._results[group][0] == new: acaba = True
             else: acaba = False
             self._results[group][1] = []

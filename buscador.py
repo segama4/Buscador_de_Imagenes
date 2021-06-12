@@ -19,7 +19,7 @@ class Buscador():
         self._carpeta_train_img = "./cifrar/retrieval/train"
         self._carpeta_train_txt = "./newsgroups/retrieval/train"
         
-    def crea_model(self, t_model, nom_database, k, document_query):
+    def crea_model(self, t_document, t_model, nom_database, k, document_query):
         if t_model == "recuperacio": 
             opcio = None
             while opcio == None: 
@@ -29,10 +29,13 @@ class Buscador():
                     opcio = None
                 
             if opcio in "Ss": 
-                self._controlador.prepara_index()
-            self._controlador.realitza_recuperacio(nom_database, document_query)
+                self._controlador.prepara_database(True)
+            else:
+                if t_document == "imatge":
+                    self._controlador.prepara_database()
+                self._controlador.realitza_recuperacio(nom_database, document_query)
         else:
-            self._controlador.prepara_index()
+            self._controlador.prepara_database()
             self._controlador.realitza_agrupacio(nom_database, k)
         
         
@@ -125,7 +128,7 @@ class Buscador():
                     else: t_model = 0; print("\nOpció NO vàlida!\n")
                 
                 self._controlador = Controller(t_document, t_representacio, t_distancia, train)
-                self.crea_model(t_model, self._database, k, document_query)
+                self.crea_model(t_document, t_model, self._database, k, document_query)
                 print("\n--------------------------------------\n")
                 return True
             

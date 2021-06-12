@@ -28,7 +28,7 @@ class Controller():
         self._t_distancia = t_distancia
         self._train_ = train
             
-    def prepara_index(self):
+    def prepara_database(self, index):
         if self._t_document == "text":
             vocabulary = Txt_Vocabulary()
             vocabulary.read("./newsgroups/retrieval/vocabulary.txt")
@@ -38,17 +38,29 @@ class Controller():
                 vocabulary_tfidf = Tfidf_Vocabulary(self._t_document, vocabulary.vocabulary) 
                 vocabulary_tfidf.read("text", "./newsgroups/vocabulary_idf.txt")
                 representador = TfIdf(vocabulary.vocabulary, vocabulary_tfidf)
-            self._index = Index(self._t_document, vocabulary.vocabulary)
-            train = []   
-            index = 0
-            file_list = os.listdir(self._train_)
-            for file in file_list: 
-                print(index)
-                index += 1
-                train.append(Document(file, self._train_+"/"+file, vocabulary, representador))
-                train[len(train)-1].read()
-                train[len(train)-1].get_representation()
-                self._index.afegeix_document(train[len(train)-1])
+            if index == True: 
+                self._index = Index(self._t_document, vocabulary.vocabulary)
+                train = []   
+                index = 0
+                file_list = os.listdir(self._train_)
+                for file in file_list: 
+                    print(index)
+                    index += 1
+                    train.append(Document(file, self._train_+"/"+file, vocabulary, representador))
+                    train[len(train)-1].read()
+                    train[len(train)-1].get_representation()
+                    self._index.afegeix_document(train[len(train)-1])
+                self.guardar("index.pckl", self._index)
+            else:
+                train = []   
+                index = 0
+                file_list = os.listdir(self._train_)
+                for file in file_list: 
+                    print(index)
+                    index += 1
+                    train.append(Document(file, self._train_+"/"+file, vocabulary, representador))
+                    train[len(train)-1].read()
+                    train[len(train)-1].get_representation()
         
         else:
             vocabulary = Img_Vocabulary()
@@ -59,7 +71,8 @@ class Controller():
                 vocabulary_tfidf = Tfidf_Vocabulary() 
                 vocabulary_tfidf.read("imatge", "./cifrar/vocabulary/idf.txt")
                 representador = TfIdf(vocabulary.vocabulary, vocabulary_tfidf)
-            self._index = Index(self._t_document, vocabulary.vocabulary)
+            
+            #self._index = Index(self._t_document, vocabulary.vocabulary)
             train = []   
             index = 0
             file_list = os.listdir(self._train_)
@@ -69,10 +82,10 @@ class Controller():
                 train.append(Imatge(file, self._train_+"/"+file, vocabulary, representador))
                 train[len(train)-1].read()
                 train[len(train)-1].get_representation()
-                self._index.afegeix_document(train[len(train)-1])
-            self._index.borra_representacions()
+                #self._index.afegeix_document(train[len(train)-1])
+                
+            #self._index.borra_representacions()
         self._train = train
-        self.guardar("index.pckl", self._index)
         
         
     def realitza_recuperacio(self, nom_database, document_query):
