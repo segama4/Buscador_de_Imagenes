@@ -30,17 +30,20 @@ class Controller():
     def prepara_index(self):
         if self._t_document == "text":
             vocabulary = Txt_Vocabulary()
-            vocabulary.read("./newsgroup/retrieval/train/vocabulary.txt")
+            vocabulary.read("./newsgroups/retrieval/vocabulary.txt")
             if self._t_representacio == "bow":
                 representador = Bow(self._t_document, vocabulary.vocabulary)
             else:
                 vocabulary_tfidf = Tfidf_Vocabulary(self._t_document, vocabulary) 
-                vocabulary_tfidf.read("./newsgroup/vocabulary_idf.txt")
+                vocabulary_tfidf.read("./newsgroups/vocabulary_idf.txt")
                 representador = TfIdf(vocabulary.vocabulary, vocabulary_tfidf)
             self._index = Index(self._t_document, vocabulary.vocabulary)
             train = []   
+            index = 0
             file_list = os.listdir(self._train_)
             for file in file_list: 
+                print(index)
+                index += 1
                 train.append(Document(file, self._train_+"/"+file, vocabulary, representador))
                 train[len(train)-1].read()
                 train[len(train)-1].get_representation()
@@ -57,12 +60,16 @@ class Controller():
                 representador = TfIdf(vocabulary.vocabulary, vocabulary_tfidf)
             self._index = Index(self._t_document, vocabulary.vocabulary)
             train = []   
+            index = 0
             file_list = os.listdir(self._train_)
             for file in file_list: 
+                print(index)
+                index += 1
                 train.append(Imatge(file, self._train_+"/"+file, vocabulary, representador))
                 train[len(train)-1].read()
                 train[len(train)-1].get_representation()
                 self._index.afegeix_document(train[len(train)-1])
+            self._index.borra_representacions()
         self._train = train
         self.guardar("index.pckl", self._index)
         

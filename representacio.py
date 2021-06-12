@@ -15,19 +15,8 @@ from math import log10
 #+--------------------------------------------------------------------------+#
 #   Definim les classes                                                      #
 #+--------------------------------------------------------------------------+#
-def compute_bow_images(img, bow_extractor):
-            sift = cv2.SIFT_create()
-            keypoints = sift.detect(img)
-            if keypoints != []:
-                bow = bow_extractor.compute(img, keypoints)
-            else:
-                bow = np.zeros((1, bow_extractor.descriptorSize()))
-            return bow
-
-
 
 class Representacio(ABC):
-    
     def __init__(self, tipus, vocabulary):
         self._tipus = tipus
         self._vocabulary = vocabulary
@@ -43,12 +32,19 @@ class Bow(Representacio):
         super().__init__(tipus, vocabulary)
         
     def calcula_representacio(self, file):
-        
+        def compute_bow_images(img, bow_extractor):
+            sift = cv2.SIFT_create()
+            keypoints = sift.detect(img)
+            if keypoints != []:
+                bow = bow_extractor.compute(img, keypoints)
+            else:
+                bow = np.zeros((1, bow_extractor.descriptorSize()))
+            return bow
         
         if self._tipus == "text": 
             counter = collections.Counter(np.array(re.sub("[^a-zA-Z0-9]", " ", file.lower()).split()))
             representation = []
-            for word in self._vocabulary.vocabulary:
+            for word in self._vocabulary:
                 if word not in counter.keys(): 
                     representation.append(0)
                 else:
@@ -58,7 +54,7 @@ class Bow(Representacio):
         else: 
             img_gray = cv2.cvtColor(file, cv2.COLOR_BGR2GRAY)
             representacio = compute_bow_images(img_gray, self._vocabulary)
-            return representacio
+            return representacio[0]
     
 
 class TfIdf(Representacio):

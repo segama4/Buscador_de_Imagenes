@@ -14,18 +14,16 @@ from distancies import Cosinus, Intersection
 class Recuperador ():
     def __init__(self, document, index, t_distancia):
         self._index = index
-        self._document = [document for document in [conjunt for conjunt in index if document.file_name == conjunt]]
+        self._documents_on_buscar, self._document = self._index.recuperar_documents_on_buscar(document)
         self._distancies = []
-        self._self._arxius_analitzar = []
-        
-        
+        self.__arxius_analitzar = []
         if t_distancia == "cosinus": 
-            self._operador = Cosinus(self._train, self._document)
+            self._operador = Cosinus()
         else: 
-            self._operador = Intersection(self._train, self._document)
+            self._operador = Intersection()
 
     def processa_recuperacio(self):
-        for fitxer in self._index.recuperar_documents_on_buscar(self._document):
+        for fitxer in self._documents_on_buscar:
             if fitxer.file_name != self._document.file_name:
                 self._distancies.append((fitxer, self._operador.calcula_distancia(self._document, fitxer)))
         self._distancies = sorted(self._distancies, key=lambda x: x[1])

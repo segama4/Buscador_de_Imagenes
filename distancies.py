@@ -13,9 +13,8 @@ from math import sqrt
 #+--------------------------------------------------------------------------+#
 
 class Distancia(ABC):
-    
     @abstractmethod
-    def calcula_representacio(self, arxiu_query, arxiu_2):
+    def calcula_distancia(self, arxiu_query, arxiu_2):
         raise NotImplementedError
      
         
@@ -28,7 +27,6 @@ class Intersection(Distancia):
 
 
 class Cosinus(Distancia):
-    
     def calcula_distancia(self, arxiu_query, arxiu_2):
         dist = np.sum(arxiu_query.representation * arxiu_2.representation)
         den1 = sqrt(np.sum(arxiu_query.representation**2))
@@ -36,4 +34,4 @@ class Cosinus(Distancia):
         return 1 - ((dist)/(den1*den2))
         
 
-        
+    

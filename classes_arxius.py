@@ -34,6 +34,9 @@ class Arxiu(ABC):
     @property
     def vocabulary(self):
         return self._vocabulary
+    @vocabulary.setter
+    def vocabulary(self, rep):
+        self._representation =  rep
     
     @property
     def label(self):
@@ -44,6 +47,10 @@ class Arxiu(ABC):
     @property
     def representation(self):
         return self._representation
+    
+    @representation.setter
+    def representation(self, rep):
+        self._representation =  rep
     
     @property
     def file(self):
@@ -107,7 +114,7 @@ class Document(Arxiu):
             self._file = file.read()
        
     def get_representation(self):
-        self._representacio = self._representador.calcula_representacio(self._file)
+        self._representation = self._representador.calcula_representacio(self._file)
         
     def visualitza(self, axs):
         axs.axis('off')
