@@ -20,18 +20,19 @@ class Buscador():
         self._carpeta_train_txt = "./newsgroups/retrieval/train"
         
     def crea_model(self, t_model, nom_database, k, document_query):
-        opcio = None
-        while opcio == None: 
-            opcio = input("\nVols actualitzar l'index? (S/N) ")
-            if opcio not in "SsNn":
-                print("\nERROR: Opció no vàlida.")
-                opcio = None
-            
-        if opcio in "Ss": 
-            self._controlador.prepara_index()
-        if t_model == "recuperacio":
+        if t_model == "recuperacio": 
+            opcio = None
+            while opcio == None: 
+                opcio = input("\nVols actualitzar l'index? (S/N) ")
+                if opcio not in "SsNn":
+                    print("\nERROR: Opció no vàlida.")
+                    opcio = None
+                
+            if opcio in "Ss": 
+                self._controlador.prepara_index()
             self._controlador.realitza_recuperacio(nom_database, document_query)
         else:
+            self._controlador.prepara_index()
             self._controlador.realitza_agrupacio(nom_database, k)
         
         

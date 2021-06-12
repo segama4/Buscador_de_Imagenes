@@ -19,19 +19,30 @@ class Distancia(ABC):
      
         
 class Intersection(Distancia):
-    def calcula_distancia(self, arxiu_query, arxiu_2):
-        dist = np.sum(np.minimum(arxiu_query.representation, arxiu_2.representation))
-        den = min(np.sum(arxiu_query.representation), np.sum(arxiu_2.representation))
-        if den != 0: return 1 - (dist / den)
-        else: return 1
+    def calcula_distancia(self, arxiu_query, arxiu_2, agrupa = None):
+        if agrupa == None:
+            dist = np.sum(np.minimum(arxiu_query.representation, arxiu_2.representation))
+            den = min(np.sum(arxiu_query.representation), np.sum(arxiu_2.representation))
+            if den != 0: return 1 - (dist / den)
+            else: return 1
+        else:
+            dist = np.sum(np.minimum(arxiu_query.representation, arxiu_2))
+            den = min(np.sum(arxiu_query.representation), np.sum(arxiu_2))
+            if den != 0: return 1 - (dist / den)
+            else: return 1
 
 
 class Cosinus(Distancia):
-    def calcula_distancia(self, arxiu_query, arxiu_2):
-        dist = np.sum(arxiu_query.representation * arxiu_2.representation)
-        den1 = sqrt(np.sum(arxiu_query.representation**2))
-        den2 = sqrt(np.sum(arxiu_2.representation**2))
-        return 1 - ((dist)/(den1*den2))
-        
+    def calcula_distancia(self, arxiu_query, arxiu_2, agrupa = None):
+        if agrupa == None:
+            dist = np.sum(arxiu_query.representation * arxiu_2.representation)
+            den1 = sqrt(np.sum(arxiu_query.representation**2))
+            den2 = sqrt(np.sum(arxiu_2.representation**2))
+            return 1 - ((dist)/(den1*den2))
+        else:
+            dist = np.sum(arxiu_query.representation * arxiu_2)
+            den1 = sqrt(np.sum(arxiu_query.representation**2))
+            den2 = sqrt(np.sum(arxiu_2**2))
+            return 1 - ((dist)/(den1*den2))
 
     

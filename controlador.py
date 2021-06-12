@@ -11,6 +11,7 @@ from representacio import Bow, TfIdf
 from indexador import Index
 from vocabulari import Txt_Vocabulary, Img_Vocabulary, Tfidf_Vocabulary
 from classes_arxius import Document, Imatge
+from distancies import Cosinus, Intersection
 import pickle
 from tqdm import tqdm
 import os
@@ -87,14 +88,19 @@ class Controller():
   
         
     def realitza_agrupacio(self, nom_database, k):
-        self._agrupador = Agrupador(self._train, k)
-        error = 2 
-        while error > 0.2:
-            error = self._agrupador.calcula_distancies()
+        if self._t_distancia == "cosinus": 
+            operador = Cosinus()
+        else: 
+            operador = Intersection()
+        self._agrupador = Agrupador(self._train, k, operador)
+        final = False
+        while not final:
+            self._agrupador.calcula_distancies()
             self._agrupador.calcula_grups()
-            self._agrupador.calcula_representant()
+            final = self._agrupador.calcula_representant()
             
         resultat = self._agrupador.get_results()
+        print(resultat)
         self.guardar(nom_database, ["agrupacio", resultat])
         
         
