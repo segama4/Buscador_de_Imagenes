@@ -100,11 +100,11 @@ class Visualitzador_Agrupacio(Visualitzador):
             index = 0
             opcio_2 = 1
             
-            fig, axs = plt.subplots(1, 5)
+            fig, axs = plt.subplots(1, len(self._database[1][index])+1)
             pos = 0
+            
             for i in range(index*5, (index*5)+5):
                 try: 
-                    print(self._database)
                     self._database[1][i][0].visualitza(axs[pos])
                     pos += 1
                 except IndexError:
@@ -127,14 +127,18 @@ class Visualitzador_Agrupacio(Visualitzador):
                         while opcio_2 == 2: 
                             print("\nERROR: No hi ha documents anteriors. Tria una opció correcta!")
                             opcio_2 = int(input("Opció: "))
-            
+                if opcio_2 == 1 and len(self._database[1][index+1]) < (index + 5):
+                    print("\nERROR: No hi ha documents posteriors. Tria una opció correcta!")
+                    opcio_2 = int(input("Opció: "))
+
                 if opcio_2 == 1:
+                    
                     index += 5
-                    fig, axs = plt.subplots(1, 5)
+                    fig, axs = plt.subplots(1, len(self._database[1][index])+1)
                     pos = 0
                     for i in range(index*5, (index*5)+5):
                         try: 
-                            print(self._database)
+                            
                             self._database[1][i][0].visualitza(axs[pos])
                             pos += 1
                         except IndexError:
@@ -143,11 +147,11 @@ class Visualitzador_Agrupacio(Visualitzador):
                 else:
                     index -= 5
                 
-                    fig, axs = plt.subplots(1, 5)
+                    fig, axs = plt.subplots(1, len(self._database[1][index])+1)
                     pos = 0
                     for i in range(index*5, (index*5)+5):
                         try: 
-                            print(self._database)
+                            
                             self._database[1][i][0].visualitza(axs[pos])
                             pos += 1
                         except IndexError:
