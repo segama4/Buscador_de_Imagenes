@@ -159,7 +159,6 @@ class Buscador():
                 self._controlador = Controller(t_document, t_representacio, t_distancia, train)
                 self.crea_model(t_document, t_model, k, document_query)
                 self.visualitza_resultats()
-                print("\n--------------------------------------\n")
                 return True
             
             except AssertionError as missatge:

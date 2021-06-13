@@ -39,7 +39,7 @@ class Controller():
             vocabulary = Txt_Vocabulary()
             vocabulary.read("./newsgroups/retrieval/vocabulary.txt")
             if self._t_representacio == "bow":
-                representador = Bow(vocabulary.vocabulary)
+                representador = Bow(self._t_document, vocabulary.vocabulary)
             else:
                 vocabulary_tfidf = Tfidf_Vocabulary(vocabulary.vocabulary) 
                 vocabulary_tfidf.read(self._t_document, "./newsgroups/vocabulary_idf.txt")
@@ -127,7 +127,7 @@ class Controller():
         self._resultat = ["recuperacio", self._recuperador.get_results()]
         
   
-    def realitza_agrupacio(self, nom_database, k):
+    def realitza_agrupacio(self, k):
         self.prepara_database()
         if self._t_distancia == "cosinus": 
             operador = Cosinus()
@@ -141,8 +141,7 @@ class Controller():
             final = self._agrupador.calcula_representant()
             
         resultat = self._agrupador.get_results()
-        print(resultat)
-        self.guardar(nom_database, ["agrupacio", resultat])
+        self._resultat = ["agrupacio", resultat]
         
         
     def visualitza_resultats(self):

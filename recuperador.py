@@ -5,10 +5,6 @@
 #+--------------------------------------------------------------------------+#
 
 from distancies import Cosinus, Intersection
-import vocabulari
-import classes_arxius
-import representacio
-from indexador import Index
 
 #+--------------------------------------------------------------------------+#
 #   Definim les classes                                                      #
@@ -18,12 +14,8 @@ from indexador import Index
 class Recuperador ():
     def __init__(self, document, database, t_document, t_distancia):
         self._t_document = t_document
-        if t_document == "text": 
-            self._index = database
-            self._database, self._document = self._index.recuperar_documents_on_buscar(document)
-        else:
-            self._database = database
-            self._document = [arxiu for arxiu in self._database if arxiu.file_name == document][0]
+        self._database = database
+        self._document = [arxiu for arxiu in self._database if arxiu.file_name == document][0]
         self._distancies = []
         if t_distancia == "cosinus": 
             self._operador = Cosinus()

@@ -87,7 +87,8 @@ class Imatge(Arxiu):
 
     def visualitza(self, axs):
             axs.axis('off')
-            axs.imshow(self.file)
+            img_show = cv2.cvtColor(self._file_representacio, cv2.COLOR_BGR2RGB)
+            axs.imshow(img_show)
      
     def get_label(self):
         for letter in self._file_name: 

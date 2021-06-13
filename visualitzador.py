@@ -36,6 +36,7 @@ class Visualitzador_Recuperacio(Visualitzador):
         for i in range(index*5, (index*5)+5):
             self._database[1][i].visualitza(axs[pos])
             pos += 1
+        plt.show()
         
         while opcio_2 in [1,2]:
             print("𝗘𝘀𝗰𝗼𝗹𝗹𝗶𝘂 𝗾𝘂𝗶𝗻𝗮 𝗼𝗽𝗰𝗶𝗼 𝘃𝗼𝗹𝗲𝘂 𝗿𝗲𝗮𝗹𝗶𝘁𝘇𝗮𝗿:\n\
@@ -64,7 +65,7 @@ class Visualitzador_Recuperacio(Visualitzador):
             for i in range(index*5, (index*5)+5): 
                 self._database[1][i].visualitza(axs[pos])
                 pos += 1 
-                
+            plt.show()
     
 class Visualitzador_Agrupacio(Visualitzador):
     
@@ -77,6 +78,7 @@ class Visualitzador_Agrupacio(Visualitzador):
                 print("Grup ",i+1)
                 fig, axs = plt.subplots()
                 self._database[1][i][0].visualitza(axs)
+                plt.show()
         except:
             print("\nERROR: Model erroni!")
             
@@ -104,6 +106,7 @@ class Visualitzador_Agrupacio(Visualitzador):
             for i in range(index*5, (index*5)+5): 
                 self._database[1][opcio][i].visualitza(axs[pos])
                 pos += 1
+            plt.show()
             
             while opcio_2 in [1,2]:
                 print("𝗘𝘀𝗰𝗼𝗹𝗹𝗶𝘂 𝗾𝘂𝗶𝗻𝗮 𝗼𝗽𝗰𝗶𝗼 𝘃𝗼𝗹𝗲𝘂 𝗿𝗲𝗮𝗹𝗶𝘁𝘇𝗮𝗿:\n\
@@ -132,6 +135,7 @@ class Visualitzador_Agrupacio(Visualitzador):
                 for i in range(index*5, (index*5)+5): 
                     self._database[1][opcio][i].visualitza(axs[pos])
                     pos += 1
+                plt.show()
         except:
             print("\nERROR: Model erroni!")
             
