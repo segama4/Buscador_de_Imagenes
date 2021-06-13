@@ -55,12 +55,14 @@ class Tfidf_Vocabulary(Vocabulary):
     def __init__(self, vocabulary_normal):
        super().__init__(vocabulary = np.array([]))
        self._vocabulary_normal = vocabulary_normal
+       self._vocabulary_dict = {}
 
     def read(self, tipus, vocabulary_file):
         if tipus == "text": 
             with open(vocabulary_file, "r") as vocabulary_file:   
                 for i in vocabulary_file:
                     try:
+                        self._vocabulary_dict[(i.split()[0])] = float(i.split()[1])
                         self._vocabulary = np.append(self._vocabulary, float(i.split()[1]))
                     except ValueError:
                         continue
@@ -75,3 +77,7 @@ class Tfidf_Vocabulary(Vocabulary):
     @property 
     def vocabulary_normal(self):
         return self._vocabulary_normal
+
+    @property
+    def vocabulary_dict(self):
+        return self._vocabulary_dict

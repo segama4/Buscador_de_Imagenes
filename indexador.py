@@ -14,7 +14,7 @@ class Index():
     def __init__(self, tipus, vocabulary):
         self._tipus = tipus
         self._index = {}
-        self._mida = int(vocabulary.descriptorSize()) if tipus == 'imatge' else len(vocabulary)
+        self._mida = int(vocabulary.descriptorSize()) if tipus == 'imatge' else (len(vocabulary)-1)
         for i in range(self._mida):
             self._index[i]=[]
 
