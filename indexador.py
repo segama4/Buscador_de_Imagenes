@@ -20,7 +20,7 @@ class Index():
         self._all = []
 
     def afegeix_document(self, document):
-        for i in range (self._mida): 
+        for i in range(self._mida): 
             if float(document.representation[i]) != 0:
                 self._index[i].append(document.file_name)
         self._all.append(document.file_name)
@@ -31,9 +31,7 @@ class Index():
             documents_on_buscar = []
             for i in range(self._mida):
                 if float(arxiu.representation[i]) != 0:
-                    for i in self._index[i]:
-                        if i not in documents_on_buscar:
-                            documents_on_buscar.append(i)
+                    documents_on_buscar.extend(self._index[i])
             documents_on_buscar = list(set(documents_on_buscar))
             index[arxiu.file_name] = documents_on_buscar
         index[None] = self._all

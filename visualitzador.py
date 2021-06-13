@@ -75,7 +75,6 @@ class Visualitzador_Agrupacio(Visualitzador):
     def visualitza_basic(self):
         try: 
             for i in range(len(self._database[1])):
-                print("Grup ",i+1)
                 fig, axs = plt.subplots()
                 self._database[1][i][0].visualitza(axs)
                 plt.show()

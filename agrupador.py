@@ -19,7 +19,6 @@ class Agrupador():
         self._operador = operador
         self._results = []
         self._distancies = {}
-        self._index = 0
         for i in range(k):
             self._results.append([self._train[random.randint(0, len(self._train)-1)], []])
         
@@ -28,7 +27,7 @@ class Agrupador():
             self._distancies[fitxer] = []
             for grup in range(self._k):
                 self._distancies[fitxer].append(self._operador.calcula_distancia(fitxer, self._results[grup][0]))
-        print(max([distancia for distancia in [distancia for distancia in [self._distancies[fitxer] for fitxer in self._distancies.keys()]]]))
+        #print(max([distancia for distancia in [distancia for distancia in [self._distancies[fitxer] for fitxer in self._distancies.keys()]]]))
         
     
     def calcula_grups(self):
@@ -36,8 +35,6 @@ class Agrupador():
             self._results[self._distancies[fitxer].index(min(self._distancies[fitxer]))][1].append(fitxer)
         
     def calcula_representant(self):
-        print(self._index)
-        self._index += 1
         for group in range(self._k):
             vegada = 0 
             for arxiu in self._results[group][1]:

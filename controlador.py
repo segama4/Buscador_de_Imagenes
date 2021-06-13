@@ -32,7 +32,6 @@ class Controller():
         index = self.recuperar("index.pckl")
         try: 
             database = index[arxiu]
-            print(len(database))
         except:
             raise AssertionError("Index no indicat. Intenta actualitzar-lo.")
         
@@ -85,11 +84,11 @@ class Controller():
                 representador = TfIdf(self._t_document, vocabulary_tfidf)
             self._index = Index(self._t_document, vocabulary.vocabulary)
             train = []   
-            #index = 0
+            index = 0
             file_list = os.listdir(self._train_)
             for file in file_list: 
-                #print(index)
-                #index += 1
+                print(index)
+                index += 1
                 train.append(Document(file, self._train_+"/"+file, vocabulary, representador))
                 train[len(train)-1].read()
                 train[len(train)-1].get_representation()
@@ -106,11 +105,11 @@ class Controller():
                 representador = TfIdf(vocabulary.vocabulary, vocabulary_tfidf)
             self._index = Index(self._t_document, vocabulary.vocabulary)
             train = []   
-            #index = 0
+            index = 0
             file_list = os.listdir(self._train_)
             for file in file_list: 
-                #print(index)
-                #index += 1
+                print(index)
+                index += 1
                 train.append(Imatge(file, self._train_+"/"+file, vocabulary, representador))
                 train[len(train)-1].read()
                 train[len(train)-1].get_representation()
@@ -134,7 +133,7 @@ class Controller():
             operador = Intersection()
         self._agrupador = Agrupador(self._train, k, operador)
         final = False
-        for i in range(10):
+        for i in range(20):
             self._agrupador.calcula_distancies()
             self._agrupador.calcula_grups()
             final = self._agrupador.calcula_representant()
@@ -163,7 +162,7 @@ class Controller():
             fitxer.seek(0)
             database = pickle.load(fitxer)
             fitxer.close()
-            print("\nS'ha carregat correctament l'índex!", database)
+            print("\nS'ha carregat correctament l'índex!")
             return database
         except:
             raise AssertionError("\nL'índex no existeix!")

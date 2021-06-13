@@ -6,6 +6,7 @@
 
 from abc import ABC, abstractmethod
 import numpy as np
+np.seterr(divide='ignore', invalid='ignore')
 from math import sqrt
 
 #+--------------------------------------------------------------------------+#
