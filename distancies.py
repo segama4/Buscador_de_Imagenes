@@ -40,9 +40,10 @@ class Cosinus(Distancia):
             den2 = sqrt(np.sum(arxiu_2.representation**2))
             return 1 - ((dist)/(den1*den2))
         else:
-            dist = np.sum(arxiu_query.representation * arxiu_2.representation)
+            print(arxiu_query.representation)
+            dist = np.sum(arxiu_query.representation * arxiu_2)
             den1 = sqrt(np.sum(arxiu_query.representation**2))
-            den2 = sqrt(np.sum(arxiu_2.representation**2))
+            den2 = sqrt(np.sum(arxiu_2**2))
             return 1 - ((dist)/(den1*den2))
 
     
