@@ -32,6 +32,7 @@ class Controller():
         index = self.recuperar("index.pckl")
         try: 
             database = index[arxiu]
+            print(len(database))
         except:
             raise AssertionError("Index no indicat. Intenta actualitzar-lo.")
         
@@ -84,16 +85,15 @@ class Controller():
                 representador = TfIdf(self._t_document, vocabulary_tfidf)
             self._index = Index(self._t_document, vocabulary.vocabulary)
             train = []   
-            index = 0
+            #index = 0
             file_list = os.listdir(self._train_)
             for file in file_list: 
-                print(index)
-                index += 1
+                #print(index)
+                #index += 1
                 train.append(Document(file, self._train_+"/"+file, vocabulary, representador))
                 train[len(train)-1].read()
                 train[len(train)-1].get_representation()
                 self._index.afegeix_document(train[len(train)-1])
-            print("")
         
         else:
             vocabulary = Img_Vocabulary()
@@ -106,16 +106,15 @@ class Controller():
                 representador = TfIdf(vocabulary.vocabulary, vocabulary_tfidf)
             self._index = Index(self._t_document, vocabulary.vocabulary)
             train = []   
-            index = 0
+            #index = 0
             file_list = os.listdir(self._train_)
             for file in file_list: 
-                print(index)
-                index += 1
+                #print(index)
+                #index += 1
                 train.append(Imatge(file, self._train_+"/"+file, vocabulary, representador))
                 train[len(train)-1].read()
                 train[len(train)-1].get_representation()
                 self._index.afegeix_document(train[len(train)-1])
-            print("")
         self._train = train
         self.guardar("index.pckl", self._index.recuperar_documents_on_buscar(self._train))
     

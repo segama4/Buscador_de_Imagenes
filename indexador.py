@@ -29,7 +29,9 @@ class Index():
             documents_on_buscar = []
             for i in range(self._mida):
                 if float(arxiu.representation[i]) != 0:
-                    documents_on_buscar.extend(self._index[i])
+                    for i in self._index[i]:
+                        if i not in documents_on_buscar:
+                            documents_on_buscar.append(i)
             documents_on_buscar = list(set(documents_on_buscar))
             index[arxiu.file_name] = documents_on_buscar
         return index
