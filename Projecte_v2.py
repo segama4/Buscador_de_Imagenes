@@ -5,7 +5,7 @@
 #   Dades del projecte:                                                      #
 #                                                                            #
 #      - Nom de la práctica: Projecte Versió 2                               #
-#      - Data d'entrega:     13 / 06 / 2021                                   #
+#      - Data d'entrega:     13 / 06 / 2021                                  #
 #      - Nom dels alumnes:   Sergi Garriga Mas                               #
 #                            Sergio Trigueros                                #
 #      - Nom professor:      Ernest Valveny Llobet                           #
