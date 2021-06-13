@@ -41,9 +41,6 @@ class Bow(Representacio):
         super().__init__(tipus, vocabulary)
         
     def calcula_representacio(self, file):
-        
-        
-
         if self._tipus == "text": 
             counter = collections.Counter(np.array(re.sub("[^a-zA-Z0-9]", " ", file.lower()).split()))
             representation = []

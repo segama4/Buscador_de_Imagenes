@@ -41,7 +41,7 @@ class Controller():
             if self._t_representacio == "bow":
                 representador = Bow(vocabulary.vocabulary)
             else:
-                vocabulary_tfidf = Tfidf_Vocabulary(self._t_document, vocabulary.vocabulary) 
+                vocabulary_tfidf = Tfidf_Vocabulary(vocabulary.vocabulary) 
                 vocabulary_tfidf.read(self._t_document, "./newsgroups/vocabulary_idf.txt")
                 representador = TfIdf(self._t_document, vocabulary_tfidf)
             train = []   
@@ -58,7 +58,7 @@ class Controller():
             if self._t_representacio == "bow":
                 representador = Bow(self._t_document, vocabulary.vocabulary)
             else:
-                vocabulary_tfidf = Tfidf_Vocabulary(vocabulary) 
+                vocabulary_tfidf = Tfidf_Vocabulary(vocabulary.vocabulary) 
                 vocabulary_tfidf.read(self._t_document, "./cifrar/vocabulary/idf.txt")
                 representador = TfIdf(self._t_document, vocabulary_tfidf)
             train = []   
@@ -79,21 +79,21 @@ class Controller():
             if self._t_representacio == "bow":
                 representador = Bow(self._t_document, vocabulary.vocabulary)
             else:
-                vocabulary_tfidf = Tfidf_Vocabulary(self._t_document, vocabulary.vocabulary) 
-                vocabulary_tfidf.read("text", "./newsgroups/vocabulary_idf.txt")
+                vocabulary_tfidf = Tfidf_Vocabulary(vocabulary.vocabulary) 
+                vocabulary_tfidf.read(self._t_document, "./newsgroups/vocabulary_idf.txt")
                 representador = TfIdf(vocabulary.vocabulary, vocabulary_tfidf)
             self._index = Index(self._t_document, vocabulary.vocabulary)
             train = []   
-            #index = 0
+            index = 0
             file_list = os.listdir(self._train_)
             for file in file_list: 
-                #print(index)
-                #index += 1
+                print(index)
+                index += 1
                 train.append(Document(file, self._train_+"/"+file, vocabulary, representador))
                 train[len(train)-1].read()
                 train[len(train)-1].get_representation()
                 self._index.afegeix_document(train[len(train)-1])
-            #print("")
+            print("")
         
         else:
             vocabulary = Img_Vocabulary()
@@ -101,21 +101,21 @@ class Controller():
             if self._t_representacio == "bow":
                 representador = Bow(self._t_document, vocabulary.vocabulary)
             else:
-                vocabulary_tfidf = Tfidf_Vocabulary() 
-                vocabulary_tfidf.read("imatge", "./cifrar/vocabulary/idf.txt")
+                vocabulary_tfidf = Tfidf_Vocabulary(vocabulary.vocabulary) 
+                vocabulary_tfidf.read(self._t_document, "./cifrar/vocabulary/idf.txt")
                 representador = TfIdf(vocabulary.vocabulary, vocabulary_tfidf)
             self._index = Index(self._t_document, vocabulary.vocabulary)
             train = []   
-            #index = 0
+            index = 0
             file_list = os.listdir(self._train_)
             for file in file_list: 
-                #print(index)
-                #index += 1
+                print(index)
+                index += 1
                 train.append(Imatge(file, self._train_+"/"+file, vocabulary, representador))
                 train[len(train)-1].read()
                 train[len(train)-1].get_representation()
                 self._index.afegeix_document(train[len(train)-1])
-            #print("")
+            print("")
         self._train = train
         self.guardar("index.pckl", self._index.recuperar_documents_on_buscar(self._train))
     
