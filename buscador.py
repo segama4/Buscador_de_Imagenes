@@ -33,7 +33,8 @@ class Buscador():
             else:
                 if t_document == "imatge":
                     self._controlador.prepara_database()
-                self._controlador.realitza_recuperacio(nom_database, document_query)
+                else:
+                    self._controlador.realitza_recuperacio(nom_database, document_query)
         else:
             self._controlador.prepara_database()
             self._controlador.realitza_agrupacio(nom_database, k)

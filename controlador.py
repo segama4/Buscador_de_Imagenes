@@ -86,8 +86,12 @@ class Controller():
                 
             #self._index.borra_representacions()
         self._train = train
-        
-        
+    
+    def prepara_database_a_partir_index(self, index, t_document)
+        if t_document
+    
+    
+    
     def realitza_recuperacio(self, nom_database, document_query):
         try: 
             index = self.recuperar("index.pckl")
