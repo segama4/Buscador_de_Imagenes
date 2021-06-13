@@ -85,31 +85,31 @@ class Visualitzador_Agrupacio(Visualitzador):
         try: 
             opcio = 1
             print("\nTrieu un grup ' 1 -",len(self._database[1]),"':")
-            try:
-                opcio = int(input("Opció: "))
-                if opcio < 1 and opcio > len(self._database[1]):
-                    raise AssertionError
-                else:
-                    opcio -= 1 
-            except:
+            opcio = int(input("Opció: "))
+            while opcio < 1 or opcio > len(self._database[1]):
                 print("\nERROR: Opció NO vàlida. Tria una opció correcta!")
                 opcio = int(input("Opció: "))
-    
             print("\n -- Visualitzant Grup", opcio+1, "--")
-            
+            print(self._database[1][opcio][0].file_name)
             index = 0
             opcio_2 = 1
-            
-            fig, axs = plt.subplots(1, len(self._database[1][index])+1)
-            pos = 0
-            
-            for i in range(index*5, (index*5)+5):
-                try: 
-                    self._database[1][i][0].visualitza(axs[pos])
+            avancar = True
+            if len(self._database[1][opcio][1]) >= 5:
+                fig, axs = plt.subplots(1, 5)
+                pos = 0
+                
+                for i in range(index*5, (index*5)+5):
+                    self._database[1][opcio][1][i].visualitza(axs[pos])
                     pos += 1
-                except IndexError:
-                    break
-            plt.show()
+                plt.show()
+            else:
+                avancar = False
+                fig, axs = plt.subplots(1, len(self._database[1][opcio][1]))
+                pos = 0
+                for i in range(len(self._database[1][opcio][1])):
+                    self._database[1][opcio][1][i].visualitza(axs[pos])
+                    pos += 1
+                plt.show()
             
             while opcio_2 in [1,2]:
                 print("𝗘𝘀𝗰𝗼𝗹𝗹𝗶𝘂 𝗾𝘂𝗶𝗻𝗮 𝗼𝗽𝗰𝗶𝗼 𝘃𝗼𝗹𝗲𝘂 𝗿𝗲𝗮𝗹𝗶𝘁𝘇𝗮𝗿:\n\
@@ -127,35 +127,37 @@ class Visualitzador_Agrupacio(Visualitzador):
                         while opcio_2 == 2: 
                             print("\nERROR: No hi ha documents anteriors. Tria una opció correcta!")
                             opcio_2 = int(input("Opció: "))
-                if opcio_2 == 1 and len(self._database[1][index+1]) < (index + 5):
-                    print("\nERROR: No hi ha documents posteriors. Tria una opció correcta!")
-                    opcio_2 = int(input("Opció: "))
+                            
+                if opcio_2 == 1 and avancar == False:
+                    while opcio_2 == 2: 
+                        print("\nERROR: No hi ha documents posteriors. Tria una opció correcta!")
+                        opcio_2 = int(input("Opció: "))            
 
                 if opcio_2 == 1:
                     
                     index += 5
-                    fig, axs = plt.subplots(1, len(self._database[1][index])+1)
-                    pos = 0
-                    for i in range(index*5, (index*5)+5):
-                        try: 
-                            
-                            self._database[1][i][0].visualitza(axs[pos])
+                    if index+5 < len(self._database[1][opcio][1]):
+                        avancar = False  
+                        fig, axs = plt.subplots(1, len(self._database[1][opcio][1])-index)
+                        pos = 0
+                        for i in range(index, len(self._database[1][opcio][1])-index):
+                            self._database[1][opcio][1][i].visualitza(axs[pos])
                             pos += 1
-                        except IndexError:
-                            break
-                    plt.show()
+                        plt.show()
+                    else:
+                        fig, axs = plt.subplots(1, 5)
+                        pos = 0
+                        for i in range(index*5, (index*5)+5):
+                            self._database[1][opcio][1][i].visualitza(axs[pos])
+                            pos += 1
+                        plt.show()
                 else:
                     index -= 5
-                
-                    fig, axs = plt.subplots(1, len(self._database[1][index])+1)
+                    avancar = True
+                    fig, axs = plt.subplots(1, len(len(self._database[1][opcio][1])))
                     pos = 0
                     for i in range(index*5, (index*5)+5):
-                        try: 
-                            
-                            self._database[1][i][0].visualitza(axs[pos])
-                            pos += 1
-                        except IndexError:
-                            break
+                        self._database[1][opcio][0][i].visualitza(axs[pos])
                     plt.show()
         except:
             print("\nERROR: Model erroni!")
