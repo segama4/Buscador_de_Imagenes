@@ -81,7 +81,7 @@ class Controller():
             else:
                 vocabulary_tfidf = Tfidf_Vocabulary(vocabulary.vocabulary) 
                 vocabulary_tfidf.read(self._t_document, "./newsgroups/vocabulary_idf.txt")
-                representador = TfIdf(vocabulary.vocabulary, vocabulary_tfidf)
+                representador = TfIdf(self._t_document, vocabulary_tfidf)
             self._index = Index(self._t_document, vocabulary.vocabulary)
             train = []   
             index = 0

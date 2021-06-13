@@ -61,15 +61,17 @@ class TfIdf(Representacio):
     
     def __init__(self, tipus, vocabulary):
         super().__init__(tipus, vocabulary)
+        
     
     def calcula_representacio(self, file):
         if self._tipus == "text":
             representation = []
             counter = collections.Counter(np.array(re.sub("[^a-zA-Z0-9]", " ", file.lower()).split()))
             cont = 0
-            for i in self._vocabulary.vocabulary:
-                representation.append((counter[cont]/len(counter))*i)
+            for i in counter:
+                representation.append((counter[i]/len(counter))*self._vocabulary.vocabulary[cont])
                 cont += 1
+            
             return np.array(representation)
 
         else:

@@ -58,9 +58,15 @@ class Tfidf_Vocabulary(Vocabulary):
 
     def read(self, tipus, vocabulary_file):
         if tipus == "text": 
-            with open(vocabulary_file, "r") as vocabulary_file:
-                for paraula in vocabulary_file.readline():
-                    self._vocabulary.append(float(paraula.split()[1]))
+            with open(vocabulary_file, "r") as vocabulary_file:   
+                for i in vocabulary_file:
+                    try:
+                        self._vocabulary = np.append(self._vocabulary, float(i.split()[1]))
+                    except ValueError:
+                        continue
+                    
+            
+
         else:
             with open(vocabulary_file, "r") as vocabulary_file:
                 for paraula in vocabulary_file:
