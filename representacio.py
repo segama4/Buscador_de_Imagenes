@@ -56,7 +56,7 @@ class Bow(Representacio):
     
         else: 
             img_gray = cv2.cvtColor(file, cv2.COLOR_BGR2GRAY)
-            representacio = compute_bow_images(img_gray, self._vocabulary.vocabulary)
+            representacio = compute_bow_images(img_gray, self._vocabulary)
             return representacio[0]
     
 
@@ -65,16 +65,12 @@ class TfIdf(Representacio):
     def __init__(self, tipus, vocabulary):
         super().__init__(tipus, vocabulary)
     
-
-        
-        
-
     def calcula_representacio(self, file):
         if self._tipus == "text":
             representation = []
             counter = collections.Counter(np.array(re.sub("[^a-zA-Z0-9]", " ", file.lower()).split()))
             cont = 0
-            for i in self._vocabulary:
+            for i in self._vocabulary.vocabulary:
                 representation.append((counter[cont]/len(counter))*i)
                 cont += 1
             return np.array(representation)
@@ -84,12 +80,9 @@ class TfIdf(Representacio):
             img_gray = cv2.cvtColor(file, cv2.COLOR_BGR2GRAY)
             representacio = compute_bow_images(img_gray, self._vocabulary.vocabulary_normal)
             cont = 0
-            for i in self._vocabulary:
+            for i in self._vocabulary.vocabulary:
                 representation.append((representacio[cont]/len(representacio))*i)
                 cont += 1
-                
-            
-
             return np.array (representation)
 
 

@@ -13,8 +13,8 @@ from abc import ABC, abstractmethod
 
 class Visualitzador(ABC):
     
-    def __init__(self, database):
-        self._database = database
+    def __init__(self, resultat):
+        self._database = resultat
         
     @abstractmethod
     def visualitza(self):
@@ -23,15 +23,15 @@ class Visualitzador(ABC):
         
 class Visualitzador_Recuperacio(Visualitzador):
     
-    def __init__(self, database):
-        super().__init__(database)
+    def __init__(self, resultat):
+        super().__init__(resultat)
             
     def visualitza(self):
         print("\n -- Visualitzant resultats --")
         
         index = 0
         opcio_2 = 1
-        fig, axs = plt.subplots(5)
+        fig, axs = plt.subplots(1,5)
         pos = 0
         for i in range(index*5, (index*5)+5):
             self._database[1][i].visualitza(axs[pos])
@@ -59,7 +59,7 @@ class Visualitzador_Recuperacio(Visualitzador):
             else:
                 index -= 5
         
-            fig, axs = plt.subplots(5)
+            fig, axs = plt.subplots(1, 5)
             pos = 0
             for i in range(index*5, (index*5)+5): 
                 self._database[1][i].visualitza(axs[pos])
@@ -68,13 +68,13 @@ class Visualitzador_Recuperacio(Visualitzador):
     
 class Visualitzador_Agrupacio(Visualitzador):
     
-    def __init__(self, database):
-        super().__init__(database)
+    def __init__(self, resultat):
+        super().__init__(resultat)
     
     def visualitza_basic(self):
         try: 
             for i in range(len(self._database[1])):
-                print("Grup ",i)
+                print("Grup ",i+1)
                 fig, axs = plt.subplots()
                 self._database[1][i][0].visualitza(axs)
         except:
@@ -94,12 +94,12 @@ class Visualitzador_Agrupacio(Visualitzador):
                 print("\nERROR: Opció NO vàlida. Tria una opció correcta!")
                 opcio = int(input("Opció: "))
     
-            print("\n -- Visualitzant Grup", opcio, "--")
+            print("\n -- Visualitzant Grup", opcio+1, "--")
             
             index = 0
             opcio_2 = 1
             
-            fig, axs = plt.subplots(5)
+            fig, axs = plt.subplots(1, 5)
             pos = 0
             for i in range(index*5, (index*5)+5): 
                 self._database[1][opcio][i].visualitza(axs[pos])
@@ -127,7 +127,7 @@ class Visualitzador_Agrupacio(Visualitzador):
             else:
                 index -= 5
             
-                fig, axs = plt.subplots(5)
+                fig, axs = plt.subplots(1, 5)
                 pos = 0
                 for i in range(index*5, (index*5)+5): 
                     self._database[1][opcio][i].visualitza(axs[pos])

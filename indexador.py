@@ -14,62 +14,22 @@ class Index():
     def __init__(self, tipus, vocabulary):
         self._tipus = tipus
         self._index = {}
-        self._mida = int(vocabulary.vocabulary.descriptorSize()) if tipus == 'imatge' else len(vocabulary)
+        self._mida = int(vocabulary.descriptorSize()) if tipus == 'imatge' else len(vocabulary)
         for i in range(self._mida):
             self._index[i]=[]
-        self._representacions = "si"
-        self._pos = 0
 
     def afegeix_document(self, document):
         for i in range (self._mida): 
             if float(document.representation[i]) != 0:
-                self._index[i].append(document)
+                self._index[i].append(document.file_name)
 
-    def recuperar_documents_on_buscar(self, nom_document):
-        if self._tipus == "text": 
-            document = None
-            for i in self._index.keys():
-                for j in self._index[i]:
-                    if j.file_name == nom_document:
-                        document = j
+    def recuperar_documents_on_buscar(self, database):
+        index = {}
+        for arxiu in database: 
             documents_on_buscar = []
-            self._pos += 1
             for i in range(self._mida):
-                if float(document.representation[i]) != 0:
+                if float(arxiu.representation[i]) != 0:
                     documents_on_buscar.extend(self._index[i])
             documents_on_buscar = list(set(documents_on_buscar))
-            return documents_on_buscar, document
-# =============================================================================
-#         else:
-#             document = None
-#             for i in self._index.keys():
-#                 for j in self._index[i]:
-#                     if j.file_name == nom_document:
-#                         document = j
-#             documents_on_buscar = []
-#             self._pos += 1
-#             for i in range(self._mida):
-#                 if float(document.representation[i]) != 0:
-#                     documents_on_buscar.extend(self._index[i])
-#             documents_on_buscar = list(set(documents_on_buscar))
-#             return [doc.file_name for doc in documents_on_buscar]
-# =============================================================================
-    
-# =============================================================================
-#     def borra_representacions(self):
-#         for index in self._index.keys():
-#             for arxiu in self._index[index]:
-#                 arxiu.representation = None
-#                 arxiu.vocabulary = None
-#         self._representacions = "no"
-#                 
-#     def calcula_representacions(self):
-#         for index in self._index.keys():
-#             for arxiu in self._index[index]:
-#                 arxiu.get_representation()
-#         self._representacions = "si"
-#         
-#     @property
-#     def representations(self):
-#         return self._representacions
-# =============================================================================
+            index[arxiu.file_name] = documents_on_buscar
+        return index
