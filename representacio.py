@@ -41,6 +41,15 @@ class Bow(Representacio):
         super().__init__(tipus, vocabulary)
         
     def calcula_representacio(self, file):
+        def compute_bow_images(img, bow_extractor):
+            sift = cv2.SIFT_create()
+            keypoints = sift.detect(img)
+            if keypoints != []:
+                bow = bow_extractor.compute(img, keypoints)
+            else:
+                bow = np.zeros((1, bow_extractor.descriptorSize()))
+            return bow
+        
         if self._tipus == "text": 
             counter = collections.Counter(np.array(re.sub("[^a-zA-Z0-9]", " ", file.lower()).split()))
             representation = []
