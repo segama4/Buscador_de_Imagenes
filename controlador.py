@@ -126,20 +126,23 @@ class Controller():
         
   
     def realitza_agrupacio(self, k):
-        self.prepara_database()
-        if self._t_distancia == "cosinus": 
-            operador = Cosinus()
-        else: 
-            operador = Intersection()
-        self._agrupador = Agrupador(self._train, k, operador)
-        final = False
-        for i in range(20):
-            self._agrupador.calcula_distancies()
-            self._agrupador.calcula_grups()
-            final = self._agrupador.calcula_representant()
-            
-        resultat = self._agrupador.get_results()
-        self._resultat = ["agrupacio", resultat]
+        try: 
+            self.prepara_database()
+            if self._t_distancia == "cosinus": 
+                operador = Cosinus()
+            else: 
+                operador = Intersection()
+            self._agrupador = Agrupador(self._train, k, operador)
+            final = False
+            for i in range(20):
+                self._agrupador.calcula_distancies()
+                self._agrupador.calcula_grups()
+                final = self._agrupador.calcula_representant()
+                
+            resultat = self._agrupador.get_results()
+            self._resultat = ["agrupacio", resultat]
+        except:
+            raise AssertionError("Index incorrecte!")
         
         
     def visualitza_resultats(self):

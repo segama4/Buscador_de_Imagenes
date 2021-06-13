@@ -27,7 +27,6 @@ class Agrupador():
             self._distancies[fitxer] = []
             for grup in range(self._k):
                 self._distancies[fitxer].append(self._operador.calcula_distancia(fitxer, self._results[grup][0]))
-        #print(max([distancia for distancia in [distancia for distancia in [self._distancies[fitxer] for fitxer in self._distancies.keys()]]]))
         
     
     def calcula_grups(self):

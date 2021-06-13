@@ -93,11 +93,12 @@ class Visualitzador_Agrupacio(Visualitzador):
             print(self._database[1][opcio][0].file_name)
             index = 0
             opcio_2 = 1
+            opcio -= 1
             avancar = True
             if len(self._database[1][opcio][1]) >= 5:
                 fig, axs = plt.subplots(1, 5)
+                print(len(axs))
                 pos = 0
-                
                 for i in range(index*5, (index*5)+5):
                     self._database[1][opcio][1][i].visualitza(axs[pos])
                     pos += 1
@@ -136,7 +137,7 @@ class Visualitzador_Agrupacio(Visualitzador):
                 if opcio_2 == 1:
                     
                     index += 5
-                    if index+5 < len(self._database[1][opcio][1]):
+                    if index+5 > len(self._database[1][opcio][1]):
                         avancar = False  
                         fig, axs = plt.subplots(1, len(self._database[1][opcio][1])-index)
                         pos = 0

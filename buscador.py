@@ -48,7 +48,7 @@ class Buscador():
             opcio = int(input("1- Crea els models.\n2- Visualitza resultats. (Atenció: Abans has de crear els models!)\n\nAltre número implica sortir.\n\n"))
         
         if opcio == 1:
-            #try: 
+            try: 
                 print("\n\n𝚂𝚎𝚕𝚎𝚌𝚌𝚒𝚘𝚗𝚊 𝚎𝚕𝚜 𝚙𝚊𝚛𝚊𝚖𝚎𝚝𝚛𝚎𝚜 𝚊𝚖𝚋 𝚎𝚕𝚜 𝚚𝚞𝚎 𝚟𝚘𝚕𝚜 𝚝𝚛𝚎𝚋𝚊𝚕𝚕𝚊𝚛!")
             
                 t_document = 0; t_representacio = 0; t_distancia = 0; t_model = 0; k = 0; document_query = None;
@@ -86,8 +86,8 @@ class Buscador():
                 self._controlador = Controller(t_document, t_representacio, t_distancia, train)
                 self._controlador.crea_index()
                 return True
-            #except:
-            #    print("ERROR: Alguna cosa no ha anat com desitjavem!")
+            except:
+                print("ERROR: Alguna cosa no ha anat com desitjavem!")
                     
         elif opcio == 2:      
             try: 
