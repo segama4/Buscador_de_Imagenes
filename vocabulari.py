@@ -72,7 +72,7 @@ class Tfidf_Vocabulary(Vocabulary):
         else:
             with open(vocabulary_file, "r") as vocabulary_file:
                 for paraula in vocabulary_file:
-                    self._vocabulary = np.append(self._vocabulary,float(paraula[:-1]))
+                    self._vocabulary = np.append(self._vocabulary,float(paraula))
                     
     @property 
     def vocabulary_normal(self):

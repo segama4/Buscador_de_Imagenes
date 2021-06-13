@@ -77,7 +77,7 @@ class TfIdf(Representacio):
             representacio = compute_bow_images(img_gray, self._vocabulary.vocabulary_normal)
             cont = 0
             for i in self._vocabulary.vocabulary:
-                representation.append((representacio[cont]/len(representacio))*i)
+                representation.append((representacio[0,cont]/len(representacio))*i)
                 cont += 1
             return np.array (representation)
 
