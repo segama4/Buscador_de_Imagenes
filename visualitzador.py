@@ -89,7 +89,7 @@ class Visualitzador_Agrupacio(Visualitzador):
                 opcio = int(input("Opció: "))
                 if opcio < 1 or opcio > len(self._database[1])+1:
                     print("\nERROR: Opció NO vàlida. Tria una opció correcta!") 
-                elif opcio != len(self._database[1])+1 and len(self._database[1][opcio-1][1]) == 0: 
+                elif opcio != len(self._database[1])+1 and len(self._database[1][opcio-1]) == 0: 
                     print("\nNo hi ha documents en aquest grup!")
                     opcio = -1
                 
