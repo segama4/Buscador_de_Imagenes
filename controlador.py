@@ -87,7 +87,7 @@ class Controller():
             index = 0
             file_list = os.listdir(self._train_)
             for file in file_list: 
-                print(index)
+                #print(index)
                 index += 1
                 train.append(Document(file, self._train_+"/"+file, vocabulary, representador))
                 train[len(train)-1].read()
@@ -108,7 +108,7 @@ class Controller():
             index = 0
             file_list = os.listdir(self._train_)
             for file in file_list: 
-                print(index)
+                #print(index)
                 index += 1
                 train.append(Imatge(file, self._train_+"/"+file, vocabulary, representador))
                 train[len(train)-1].read()
