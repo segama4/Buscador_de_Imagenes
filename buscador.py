@@ -150,10 +150,10 @@ class Buscador():
                     elif t_model == 2: 
                         t_model = "agrupament"
                         try:
-                            k = int(input("Introdueix el número de grups: \n"))
+                            k = int(input("Introdueix el número de grups: "))
                         except:
                             print("ERROR: Opció NO vàlida. Tria una opció correcta!")
-                            k = int(input("Introdueix el número de grups: \n"))
+                            k = int(input("Introdueix el número de grups: "))
                     else: t_model = 0; print("\nOpció NO vàlida!\n")
                 
                 self._controlador = Controller(t_document, t_representacio, t_distancia, train)

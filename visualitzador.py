@@ -83,21 +83,25 @@ class Visualitzador_Agrupacio(Visualitzador):
             
     def visualitza_dinamic(self):
         try: 
-            opcio = 1
+            opcio = -1
             print("\nTrieu un grup ' 1 -",len(self._database[1]),"':")
-            opcio = int(input("Opció: "))
             while opcio < 1 or opcio > len(self._database[1]):
-                print("\nERROR: Opció NO vàlida. Tria una opció correcta!")
                 opcio = int(input("Opció: "))
-            print("\n -- Visualitzant Grup", opcio+1, "--")
-            print(self._database[1][opcio][0].file_name)
+                if (opcio < 1 or opcio > len(self._database[1])):
+                    print("\nERROR: Opció NO vàlida. Tria una opció correcta!") 
+                elif len(self._database[1][opcio-1][1]) == 0: 
+                    print("\nNo hi ha documents en aquest grup!")
+                    opcio = -1
+                
+                        
+            print("\n -- Visualitzant Grup", opcio, "--")
+            #print(self._database[1][opcio][0].file_name)
             index = 0
             opcio_2 = 1
             opcio -= 1
             avancar = True
             if len(self._database[1][opcio][1]) >= 5:
                 fig, axs = plt.subplots(1, 5)
-                print(len(axs))
                 pos = 0
                 for i in range(index*5, (index*5)+5):
                     self._database[1][opcio][1][i].visualitza(axs[pos])
@@ -152,10 +156,10 @@ class Visualitzador_Agrupacio(Visualitzador):
                             self._database[1][opcio][1][i].visualitza(axs[pos])
                             pos += 1
                         plt.show()
-                else:
+                elif opcio_2 == 1:
                     index -= 5
                     avancar = True
-                    fig, axs = plt.subplots(1, len(len(self._database[1][opcio][1])))
+                    fig, axs = plt.subplots(1, len(self._database[1][opcio][1]))
                     pos = 0
                     for i in range(index*5, (index*5)+5):
                         self._database[1][opcio][0][i].visualitza(axs[pos])
