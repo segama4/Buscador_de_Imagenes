@@ -134,7 +134,7 @@ class Visualitzador_Agrupacio(Visualitzador):
                                 opcio_2 = int(input("Opció: "))
                                 
                     if opcio_2 == 1 and avancar == False:
-                        while opcio_2 == 2: 
+                        while opcio_2 == 1: 
                             print("\nERROR: No hi ha documents posteriors. Tria una opció correcta!")
                             opcio_2 = int(input("Opció: "))            
     
@@ -156,13 +156,15 @@ class Visualitzador_Agrupacio(Visualitzador):
                                 self._database[1][opcio][1][i].visualitza(axs[pos])
                                 pos += 1
                             plt.show()
+                            
                     elif opcio_2 == 2:
                         index -= 5
                         avancar = True
-                        fig, axs = plt.subplots(1, len(self._database[1][opcio][1]))
+                        fig, axs = plt.subplots(1, 5)
                         pos = 0
                         for i in range(index*5, (index*5)+5):
-                            self._database[1][opcio][0][i].visualitza(axs[pos])
+                            self._database[1][opcio][1][i].visualitza(axs[pos])
+                            pos += 1
                         plt.show()
         except:
             print("\nERROR: Model erroni!")
