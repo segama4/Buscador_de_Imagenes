@@ -47,12 +47,12 @@ class Visualitzador_Recuperacio(Visualitzador):
             try: 
                 opcio_2 = int(input("Opció: "))
             except:
-                print("ERROR: Opció NO vàlida. Tria una opció correcta!")
+                print("\nERROR: Opció NO vàlida. Tria una opció correcta!")
                 opcio_2 = int(input("Opció: "))
             
             if opcio_2 == 2 and index == 0:
                     while opcio_2 == 2: 
-                        print("ERROR: No hi ha documents anteriors. Tria una opció correcta!")
+                        print("\nERROR: No hi ha documents anteriors. Tria una opció correcta!")
                         opcio_2 = int(input("Opció: "))
             
             if opcio_2 == 1:
@@ -117,7 +117,7 @@ class Visualitzador_Agrupacio(Visualitzador):
             try: 
                 opcio_2 = int(input("Opció: "))
             except:
-                print("ERROR: Opció NO vàlida. Tria una opció correcta!")
+                print("\nERROR: Opció NO vàlida. Tria una opció correcta!")
                 opcio_2 = int(input("Opció: "))
             
             if opcio_2 == 2 and index == 0:
@@ -148,7 +148,7 @@ class Visualitzador_Agrupacio(Visualitzador):
         try:
             opcio = int(input("Opció: "))
         except:
-            print("ERROR: Opció NO vàlida. Tria una opció correcta!")
+            print("\nERROR: Opció NO vàlida. Tria una opció correcta!")
             opcio = int(input("Opció: "))
         return opcio
     
