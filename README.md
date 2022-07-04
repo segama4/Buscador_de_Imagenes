@@ -1,5 +1,5 @@
 
-Estructura del carpetes de base de dades:
+Files structure inside dataset:
 
  - Oxford: 
  	- clustering
